@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.Validator = undefined;
 
-var _typeable = require('typeable');
-
 var _validators = require('./validators');
 
 var defaultValidators = _interopRequireWildcard(_validators);
