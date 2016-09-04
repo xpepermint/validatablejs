@@ -47,8 +47,8 @@ let errors = v.validate(
 |--------|------|----------|---------|------------
 | firstErrorOnly | Boolean | No | false | When set to `true`, only the first error is returned otherwise all validation errors are returned.
 | errorBuilder | Function|Promise | No | (value, {message}) => message | A method for constructing a custom validation error message.
-| validators | Object | No | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
-| context | Object | No | A custom context reference which is applied to each validator method.
+| validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
+| context | Object | No | null | A custom context reference which is applied to each validator method.
 
 **Validator.prototype.validate(value, definitions):Boolean;**
 
@@ -58,6 +58,187 @@ let errors = v.validate(
 |--------|------|----------|---------|------------
 | value | Any | Yes | - | A value to validate.
 | definitions | Object | Yes | - | A configuration object describing validations.
+
+### Built-in Validators
+
+#### absence
+
+> Validates that the specified field is blank.
+
+#### arrayExclusion
+
+> Validates that the specified field is not in an array of values.
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| values | Array | Yes | Array of restricted values.
+
+#### arrayInclusion
+
+> Validates that the specified field is in an array of values.
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| values | Array | Yes | Array of allowed values.
+
+#### blockValue
+
+> Validates the specified field against the provided block function. If the function returns true then the field is treated as valid.
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| block | Function | Yes | Synchronous or asynchronous function (e.g. `async () => true`)
+
+```js
+let definition = {
+  block: async (value, definition) => true,
+  message: 'must be present'
+};
+```
+
+#### BSONObjectID
+
+> Validates that the specified field is a valid hex-encoded representation of a [MongoDB ObjectID](http://docs.mongodb.org/manual/reference/object-id/).
+
+#### presence
+
+> Validates that the specified field is not blank.
+
+#### stringBase64
+
+> Validates that the specified field is base64 encoded string.
+
+#### stringCreditCard
+
+> Validates that the specified field is a credit card number.
+
+#### stringDate
+
+> Validates that the specified field is a date string.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| format | String | No | - | Date format (possible value is `iso8601`).
+
+#### stringEmail
+
+> Validates that the specified field is an email.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|----------|------------
+| allowDisplayName | Boolean | No | false | When set to true, the validator will also match `name <address>`.
+| allowUtf8LocalPart | Boolean | No | false | When set to false, the validator will not allow any non-English UTF8 character in email address' local part.
+| requireTld | Boolean | No | true | When set to false, email addresses without having TLD in their domain will also be matched.
+
+#### stringExclusion
+
+> Checks if the string does not contain the seed.
+
+| Option | Type | Required | Default | Description
+|--------|------|---------|----------|------------
+| seed | String | Yes | - | The seed which should exist in the string.
+
+#### stringFQDN
+
+> Validates that the specified field is a fully qualified domain name (e.g. domain.com).
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| requireTld | Boolean | No | Require top-level domain name.
+| allowUnderscores | Boolean | No | Allow string to include underscores.
+| allowTrailingDot | Boolean | No | Allow string to include a trailing dot.
+
+#### stringHexColor
+
+> Validates that the specified field is a hexadecimal color string.
+
+#### stringHexadecimal
+
+> Validates that the specified field is a hexadecimal number.
+
+#### stringInclusion
+
+> Checks if the string contains the seed.
+
+| Option | Type | Required | Default | Description
+|--------|------|---------|----------|------------
+| seed | String | Yes | - | The seed which should exist in the string.
+
+#### stringIP
+
+> Validates that the specified field is an IP.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|-------------
+| version | Integer | No | - | IP version (4 or 6).
+
+#### stringISBN
+
+> Validates that the specified field is an [International Standard Book Number](https://en.wikipedia.org/wiki/International_Standard_Book_Number).
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| version | Integer | No | - | IP version (10 or 13).
+
+#### stringISIN
+
+> Validates that the specified field is an [International Securities Identification](https://en.wikipedia.org/wiki/International_Securities_Identification_Number).
+
+#### stringJSON
+
+> Validates that the specified field is a stringified JSON string.
+
+#### stringLength
+
+> Validates the length of the specified field.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|----------|------------
+| min | Number | No | 0 | Minimum number of characters.
+| max | Number | No | - | Maximum number of characters.
+
+#### stringLowercase
+
+> Validates that the specified field is lowercase.
+
+#### stringMACAddress
+
+> Validates that the specified field is a MAC address.
+
+#### stringMatch
+
+> Validates that the specified field matches the pattern.
+
+| Key | Type | Required | Description
+|-----|------|----------|------------
+| pattern | String | Yes | Regular expression pattern.
+| modifiers | String | No | Regular expression modifiers.
+
+#### stringUppercase
+
+> Validates that the specified field is uppercase.
+
+#### stringURL
+
+> Validates that the specified field is an URL.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| protocols | Array | No | ['http', 'https', 'ftp'] | List of known protocols (e.g. http, https, ftp).
+| requireTld | Boolean | No | true | Require top-level domain name.
+| requireProtocol | Boolean | No | true | Require URL protocol.
+| requireValidProtocol | Boolean | No | true | Require a valid protocol.
+| allowUnderscores | Boolean | No | false | Allow using underscores.
+| allowTrailingDot | Boolean | No | false | Allow trailing dot.
+| allowProtocolRelativeUrls | Boolean | No | false | Allow protocol relative urls (e.g. //foobar.com)
+
+#### stringUUID
+
+> Validates that the specified field is a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| version | Integer | No | UUID version (3, 4 or 5).
 
 ## License (MIT)
 
