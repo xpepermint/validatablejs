@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-exclusion');
+const {stringExclusion} = require('../../dist/validators');
 
 test('fails when a string', (t) => {
-  t.is(validator(true, {seed: 'true'}), true);
+  t.is(stringExclusion(true, {seed: 'true'}), true);
 });
 
 test('fails when containing the provided seed', (t) => {
-  t.is(validator('my fake2 description', {seed: 'black'}), true);
+  t.is(stringExclusion('my fake2 description', {seed: 'black'}), true);
 });
 
 test('passes when not containing the provided seed', (t) => {
-  t.is(validator('my fake description', {seed: 'fake'}), false);
+  t.is(stringExclusion('my fake description', {seed: 'fake'}), false);
 });

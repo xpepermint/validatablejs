@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-isin');
+const {stringISIN} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringISIN(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('DE000BAY0018'), false);
+  t.is(stringISIN('DE000BAY0018'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('AU0000XVGZA3'), true);
+  t.is(stringISIN('AU0000XVGZA3'), true);
 });

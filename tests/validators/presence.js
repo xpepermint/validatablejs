@@ -1,18 +1,18 @@
 const test = require('ava');
-const validator = require('../../dist/validators/presence');
+const {presence} = require('../../dist/validators');
 
 test('fails when null', (t) => {
-  t.is(validator(null), false);
+  t.is(presence(null), false);
 });
 
 test('fails when undefined', (t) => {
-  t.is(validator(), false);
+  t.is(presence(), false);
 });
 
 test('fails when blank', (t) => {
-  t.is(validator(''), false);
+  t.is(presence(''), false);
 });
 
 test('passes when present', (t) => {
-  t.is(validator('john'), true);
+  t.is(presence('john'), true);
 });

@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-uppercase');
+const {stringUppercase} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringUppercase(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('Hello'), false);
+  t.is(stringUppercase('Hello'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('HELLO'), true);
+  t.is(stringUppercase('HELLO'), true);
 });

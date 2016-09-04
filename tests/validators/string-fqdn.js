@@ -1,30 +1,30 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-fqdn');
+const {stringFQDN} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringFQDN(true), false);
 });
 
 test('fails without top-level domain name', (t) => {
-  t.is(validator('domain'), false);
+  t.is(stringFQDN('domain'), false);
 });
 
 test('fails when including underscore', (t) => {
-  t.is(validator('do_main.com'), false);
+  t.is(stringFQDN('do_main.com'), false);
 });
 
 test('fails when including trailing dot', (t) => {
-  t.is(validator('domain.com.'), false);
+  t.is(stringFQDN('domain.com.'), false);
 });
 
 test('passes with top-level domain name', (t) => {
-  t.is(validator('domain.com'), true);
+  t.is(stringFQDN('domain.com'), true);
 });
 
 test('passes when including underscore where allowUnderscores is true', (t) => {
-  t.is(validator('do_main.com', {allowUnderscores: true}), true);
+  t.is(stringFQDN('do_main.com', {allowUnderscores: true}), true);
 });
 
 test('passes when including trailing dot where allowTrailingDot is true', (t) => {
-  t.is(validator('domain.com.', {allowTrailingDot: true}), true);
+  t.is(stringFQDN('domain.com.', {allowTrailingDot: true}), true);
 });

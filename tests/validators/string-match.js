@@ -1,6 +1,6 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-match');
+const {stringMatch} = require('../../dist/validators');
 
 test('passes with a valid pattern', (t) => {
-  t.is(validator('me', 'me', 'i'), true);
+  t.is(stringMatch('me', 'me', 'i'), true);
 });

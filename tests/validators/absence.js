@@ -1,18 +1,18 @@
 const test = require('ava');
-const validator = require('../../dist/validators/absence');
+const {absence} = require('../../dist/validators');
 
 test('fails when not blank', (t) => {
-  t.is(validator('text'), false);
+  t.is(absence('text'), false);
 });
 
 test('passes when null', (t) => {
-  t.is(validator(null), true);
+  t.is(absence(null), true);
 });
 
 test('passes when undefined', (t) => {
-  t.is(validator(), true);
+  t.is(absence(), true);
 });
 
 test('passes when blank', (t) => {
-  t.is(validator(''), true);
+  t.is(absence(''), true);
 });

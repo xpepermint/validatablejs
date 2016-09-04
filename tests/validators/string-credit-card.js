@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-credit-card');
+const {stringCreditCard} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringCreditCard(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('1'), false);
+  t.is(stringCreditCard('1'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('375556917985515'), true);
+  t.is(stringCreditCard('375556917985515'), true);
 });

@@ -1,80 +1,71 @@
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Validator = undefined;
+
+var _typeable = require('typeable');
+
+var _validators = require('./validators');
+
+var defaultValidators = _interopRequireWildcard(_validators);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
-var _require = require('typeable');
+class Validator {
 
-const isFunction = _require.isFunction;
+  constructor() {
+    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
+    var _ref$firstErrorOnly = _ref.firstErrorOnly;
+    let firstErrorOnly = _ref$firstErrorOnly === undefined ? false : _ref$firstErrorOnly;
+    var _ref$errorBuilder = _ref.errorBuilder;
+    let errorBuilder = _ref$errorBuilder === undefined ? (value, _ref2) => {
+      let message = _ref2.message;
+      return message;
+    } : _ref$errorBuilder;
+    var _ref$validators = _ref.validators;
+    let validators = _ref$validators === undefined ? {} : _ref$validators;
+    var _ref$context = _ref.context;
+    let context = _ref$context === undefined ? null : _ref$context;
 
-exports.validators = {
-  absence: require('./validators/absence'),
-  arrayExclusion: require('./validators/array-exclusion'),
-  arrayInclusion: require('./validators/array-inclusion'),
-  blockValue: require('./validators/block-value'),
-  BSONObjectId: require('./validators/bson-object-id'),
-  presence: require('./validators/presence'),
-  stringBase64: require('./validators/string-base64'),
-  stringCreditCard: require('./validators/string-credit-card'),
-  stringDate: require('./validators/string-date'),
-  stringEmail: require('./validators/string-email'),
-  stringExclusion: require('./validators/string-exclusion'),
-  stringFQDN: require('./validators/string-fqdn'),
-  stringhexColor: require('./validators/string-hex-color'),
-  stringHexadecimal: require('./validators/string-hexadecimal'),
-  stringInclusion: require('./validators/string-inclusion'),
-  stringIP: require('./validators/string-ip'),
-  stringISBN: require('./validators/string-isbn'),
-  stringISIN: require('./validators/string-isin'),
-  stringJSON: require('./validators/string-json'),
-  stringLength: require('./validators/string-length'),
-  stringLowercase: require('./validators/string-lowercase'),
-  stringMACAddress: require('./validators/string-mac-address'),
-  stringMatch: require('./validators/string-match'),
-  stringUppercase: require('./validators/string-uppercase'),
-  stringURL: require('./validators/string-url'),
-  stringUUID: require('./validators/string-uuid')
-};
+    this.firstErrorOnly = firstErrorOnly;
+    this.errorBuilder = errorBuilder;
+    this.validators = Object.assign(validators, defaultValidators);
+    this.context = context;
+  }
 
-exports.validate = (() => {
-  var _ref = _asyncToGenerator(function* (value, config) {
-    var _ref2 = arguments.length <= 2 || arguments[2] === undefined ? {} : arguments[2];
+  validate(value) {
+    var _arguments = arguments,
+        _this = this;
 
-    let onlyFirstError = _ref2.onlyFirstError;
-    let errorFormat = _ref2.errorFormat;
-    let context = arguments.length <= 3 || arguments[3] === undefined ? null : arguments[3];
+    return _asyncToGenerator(function* () {
+      let definitions = _arguments.length <= 1 || _arguments[1] === undefined ? {} : _arguments[1];
 
-    if (onlyFirstError !== true) {
-      onlyFirstError = false;
-    }
-    if (!isFunction(errorFormat)) {
-      errorFormat = function (value, definition) {
-        return definition.message;
-      };
-    }
+      let errors = [];
 
-    let errors = [];
+      for (let name in definitions) {
+        let definition = definitions[name];
 
-    for (let name in config) {
-      let definition = config[name];
+        let validator = _this.validators[name];
+        if (!validator) {
+          throw new Error(`Unknown validator ${ name }`);
+        }
 
-      let validator = exports.validators[name];
-      if (!validator) {
-        throw new Error(`Unknown validator ${ name }`);
+        let isValid = yield validator.call(_this.context, value, definition);
+        if (!isValid) {
+          let error = yield _this.errorBuilder.call(_this.context, value, definition);
+          errors.push(error);
+
+          if (_this.firstErrorOnly) break;
+        }
       }
 
-      let isValid = yield validator.call(context, value, definition);
-      if (!isValid) {
-        errors.push(errorFormat.call(context, value, definition));
-
-        if (onlyFirstError) break;
-      }
-    }
-
-    return errors;
-  });
-
-  return function (_x3, _x4) {
-    return _ref.apply(this, arguments);
-  };
-})();
+      return errors;
+    })();
+  }
+}
+exports.Validator = Validator;

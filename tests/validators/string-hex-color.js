@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-hex-color');
+const {stringHexColor} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringHexColor(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('#ff'), false);
+  t.is(stringHexColor('#ff'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('#ff0034'), true);
+  t.is(stringHexColor('#ff0034'), true);
 });

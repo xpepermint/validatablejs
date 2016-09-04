@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-json');
+const {stringJSON} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringJSON(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('{key: "value"}'), false);
+  t.is(stringJSON('{key: "value"}'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('{"key": "value"}'), true);
+  t.is(stringJSON('{"key": "value"}'), true);
 });

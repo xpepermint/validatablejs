@@ -1,8 +1,9 @@
 const test = require('ava');
-const {validate} = require('../dist/index');
+const {Validator} = require('../dist/index');
 
-test('validate a value', async (t) => {
-  let result = await validate(
+test('Validator.validate', async (t) => {
+  let v = new Validator();
+  let result = await v.validate(
     '',
     {
       presence: {
@@ -10,16 +11,19 @@ test('validate a value', async (t) => {
       },
       blockValue: {
         block: async (v) => v === 'foo',
-        message: 'must be `foo`'
+        message: 'must be foo'
       }
     }
   );
 
-  t.deepEqual(result, ['is required', 'must be `foo`']);
+  t.deepEqual(result, ['is required','must be foo']);
 });
 
-test('validate with onlyFirstError=true', async (t) => {
-  let result = await validate(
+test('Validator.validate with onlyFirstError=true', async (t) => {
+  let v = new Validator({
+    firstErrorOnly: true
+  });
+  let result = await v.validate(
     '',
     {
       presence: {
@@ -27,19 +31,19 @@ test('validate with onlyFirstError=true', async (t) => {
       },
       blockValue: {
         block: async (v) => v === 'foo',
-        message: 'must be `foo`'
+        message: 'must be foo'
       }
-    },
-    {
-      onlyFirstError: true
     }
   );
 
   t.deepEqual(result, ['is required']);
 });
 
-test('validate with custom errorFormat', async (t) => {
-  let result = await validate(
+test('Validator.validate with custom errorBuilder', async (t) => {
+  let v = new Validator({
+    errorBuilder: (value, {message}) => ({message})
+  });
+  let result = await v.validate(
     '',
     {
       presence: {
@@ -47,14 +51,10 @@ test('validate with custom errorFormat', async (t) => {
       },
       blockValue: {
         block: async (v) => v === 'foo',
-        message: 'must be `foo`'
+        message: 'must be foo'
       }
-    },
-    {
-      onlyFirstError: true,
-      errorFormat: (value, definition) => ({message: definition.message})
     }
   );
 
-  t.deepEqual(result, [{message: 'is required'}]);
+  t.deepEqual(result, [{message: 'is required'}, {message: 'must be foo'}]);
 });

@@ -1,14 +1,14 @@
 const test = require('ava');
-const validator = require('../../dist/validators/string-hexadecimal');
+const {stringHexadecimal} = require('../../dist/validators');
 
 test('fails when not a string', (t) => {
-  t.is(validator(true), false);
+  t.is(stringHexadecimal(true), false);
 });
 
 test('fails when invalid', (t) => {
-  t.is(validator('abcdefg'), false);
+  t.is(stringHexadecimal('abcdefg'), false);
 });
 
 test('passes when valid', (t) => {
-  t.is(validator('ff0044'), true);
+  t.is(stringHexadecimal('ff0044'), true);
 });

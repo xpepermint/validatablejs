@@ -1,10 +1,10 @@
 const test = require('ava');
-const validator = require('../../dist/validators/block-value');
+const {blockValue} = require('../../dist/validators');
 
 test('passes with a valid synchronous block', async (t) => {
-  t.is(await validator('me', {block: (v) => v === 'me'}), true);
+  t.is(await blockValue('me', {block: (v) => v === 'me'}), true);
 });
 
 test('passes with a valid synchronous block', async (t) => {
-  t.is(await validator('me', {block: async (v) => v === 'me'}), true);
+  t.is(await blockValue('me', {block: async (v) => v === 'me'}), true);
 });
