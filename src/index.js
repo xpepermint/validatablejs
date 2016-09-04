@@ -1,3 +1,5 @@
+const {isFunction} = require('typeable');
+
 exports.validators = {
   absence: require('./validators/absence'),
   arrayExclusion: require('./validators/array-exclusion'),
@@ -27,11 +29,31 @@ exports.validators = {
   stringUUID: require('./validators/string-uuid'),
 };
 
-exports.validate = function(value, options={}, context={}) {
-  let validator = exports.validators[options.validator];
-  if (!validator) {
-    throw new Error(`Unknown validator ${name}`);
+exports.validate = async function(value, config, {onlyFirstError, errorFormat}={}, context=null) {
+  if (onlyFirstError !== true) {
+    onlyFirstError = false;
+  }
+  if (!isFunction(errorFormat)) {
+    errorFormat = (value, definition) => definition.message;
   }
 
-  return validator(value, options, context);
+  let errors = [];
+
+  for (let name in config) {
+    let definition = config[name];
+
+    let validator = exports.validators[name];
+    if (!validator) {
+      throw new Error(`Unknown validator ${name}`);
+    }
+
+    let isValid = await validator.call(context, value, definition);
+    if (!isValid) {
+      errors.push(errorFormat.call(context, value, definition));
+
+      if (onlyFirstError) break;
+    }
+  }
+
+  return errors;
 };

@@ -2,7 +2,7 @@
 
 # validatable.js
 
-> Schema enforced JavaScript objects.
+> A library for synchronous and asynchronous validation.
 
 ## Install
 
@@ -12,7 +12,51 @@ $ npm install --save validatable
 
 ## Example
 
-> TODO
+```js
+await validate(
+  'John Smith',
+  {
+    presence: {
+      message: 'must be present'
+    },
+    blockValue: {
+      block: async (value, definition) => value === 'cool',
+      message: 'must be `cool`'
+    }
+  },
+  {
+    validateAll: true
+  }
+); // -> ['must be `cool`']
+```
+
+## API
+
+**validate(value, config, {all, format}, context);**
+
+> Validates value against the provided validator. Depends on the type of validator, the method return a value or a promise.
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| value | - | Yes | A value to validate.
+| config | Object | Yes | A configuration object with validators.
+| allErrors | Boolean | No | Set to `true` to return all error messages otherwise only the first error is returned.
+| errorFormat | Function | No | A method for constructing a custom error message.
+| context | Object | No | A context to apply to each validator.
+
+```js
+validate(
+  '192.168.1.1',
+  {
+    presence: {message: 'is required'},
+    stringIP: {version: 6, message: 'invalid V6 IP'}
+  },
+  {
+    allErrors: true,
+    errorFormat: (value, definition) => ({message: definition.message})
+  }
+); // -> [{message: 'invalid V6 IP'}]
+```
 
 ## License (MIT)
 

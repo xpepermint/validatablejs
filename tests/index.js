@@ -1,15 +1,60 @@
 const test = require('ava');
 const {validate} = require('../dist/index');
 
-test('executs synchronous validator', (t) => {
-  t.is(validate('John', {
-    validator: 'presence'
-  }), true);
+test('validate a value', async (t) => {
+  let result = await validate(
+    '',
+    {
+      presence: {
+        message: 'is required'
+      },
+      blockValue: {
+        block: async (v) => v === 'foo',
+        message: 'must be `foo`'
+      }
+    }
+  );
+
+  t.deepEqual(result, ['is required', 'must be `foo`']);
 });
 
-test('executs asynchronous validator', async (t) => {
-  t.is(await validate('foo', {
-    validator: 'blockValue',
-    block: async (v) => v === 'foo'
-  }), true);
+test('validate with onlyFirstError=true', async (t) => {
+  let result = await validate(
+    '',
+    {
+      presence: {
+        message: 'is required'
+      },
+      blockValue: {
+        block: async (v) => v === 'foo',
+        message: 'must be `foo`'
+      }
+    },
+    {
+      onlyFirstError: true
+    }
+  );
+
+  t.deepEqual(result, ['is required']);
+});
+
+test('validate with custom errorFormat', async (t) => {
+  let result = await validate(
+    '',
+    {
+      presence: {
+        message: 'is required'
+      },
+      blockValue: {
+        block: async (v) => v === 'foo',
+        message: 'must be `foo`'
+      }
+    },
+    {
+      onlyFirstError: true,
+      errorFormat: (value, definition) => ({message: definition.message})
+    }
+  );
+
+  t.deepEqual(result, [{message: 'is required'}]);
 });
