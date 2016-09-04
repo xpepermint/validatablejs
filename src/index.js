@@ -1,4 +1,3 @@
-import {isFunction} from 'typeable';
 import * as defaultValidators from './validators';
 
 export class Validator {
