@@ -24,7 +24,7 @@ let v = new Validator({
   context: null
 });
 
-let errors = v.validate(
+let errors = await v.validate(
   'John Smith',
   {
     presence: {
