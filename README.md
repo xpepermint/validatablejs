@@ -46,7 +46,7 @@ let errors = await v.validate(
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | firstErrorOnly | Boolean | No | false | When set to `true`, only the first error is returned otherwise all validation errors are returned.
-| errorBuilder | Function|Promise | No | (value, {message}) => message | A method for constructing a custom validation error message.
+| errorBuilder | Function/Promise | No | (value, {message}) => message | A method for constructing a custom validation error message.
 | validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
 | context | Object | No | null | A custom context reference which is applied to each validator method.
 
@@ -99,6 +99,17 @@ let definition = {
 #### BSONObjectID
 
 > Validates that the specified field is a valid hex-encoded representation of a [MongoDB ObjectID](http://docs.mongodb.org/manual/reference/object-id/).
+
+#### numberSize
+
+> Validates the size of a number.
+
+| Option | Type | Required | Description
+|--------|------|----------|------------
+| min | Number | No | Allowed minimum value.
+| minOrEqual | Number | No | Allowed minimum value (allowing equal).
+| max | Number | No | Allowed maximum value.
+| maxOrEqual | Number | No | Allowed maximum value (allowing equal).
 
 #### presence
 

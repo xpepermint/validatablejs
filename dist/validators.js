@@ -8,6 +8,7 @@ exports.arrayInclusion = arrayInclusion;
 exports.arrayExclusion = arrayExclusion;
 exports.blockValue = blockValue;
 exports.BSONObjectID = BSONObjectID;
+exports.numberSize = numberSize;
 exports.presence = presence;
 exports.stringBase64 = stringBase64;
 exports.stringCreditCard = stringCreditCard;
@@ -70,6 +71,25 @@ function BSONObjectID(v) {
   return _mongodb.ObjectID.isValid(v);
 };
 
+function numberSize(v) {
+  var _ref3 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+
+  let min = _ref3.min;
+  let minOrEqual = _ref3.minOrEqual;
+  let max = _ref3.max;
+  let maxOrEqual = _ref3.maxOrEqual;
+
+  if ((0, _typeable.isNumber)(v)) {
+    if ((0, _typeable.isNumber)(min) && !(v > min)) return false;
+    if ((0, _typeable.isNumber)(minOrEqual) && !(v >= minOrEqual)) return false;
+    if ((0, _typeable.isNumber)(max) && !(v < max)) return false;
+    if ((0, _typeable.isNumber)(maxOrEqual) && !(v <= maxOrEqual)) return false;
+    return true;
+  } else {
+    return false;
+  }
+}
+
 function presence(v) {
   return (0, _typeable.isPresent)(v);
 };
@@ -91,9 +111,9 @@ function stringCreditCard(v) {
 };
 
 function stringDate(v) {
-  var _ref3 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref4 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  let format = _ref3.format;
+  let format = _ref4.format;
 
   function isFormat(v, format) {
     if (!format) return true;
@@ -111,14 +131,14 @@ function stringDate(v) {
 };
 
 function stringEmail(v) {
-  var _ref4 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref5 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  var _ref4$allowDisplayNam = _ref4.allowDisplayName;
-  let allowDisplayName = _ref4$allowDisplayNam === undefined ? false : _ref4$allowDisplayNam;
-  var _ref4$allowUtf8LocalP = _ref4.allowUtf8LocalPart;
-  let allowUtf8LocalPart = _ref4$allowUtf8LocalP === undefined ? false : _ref4$allowUtf8LocalP;
-  var _ref4$requireTld = _ref4.requireTld;
-  let requireTld = _ref4$requireTld === undefined ? true : _ref4$requireTld;
+  var _ref5$allowDisplayNam = _ref5.allowDisplayName;
+  let allowDisplayName = _ref5$allowDisplayNam === undefined ? false : _ref5$allowDisplayNam;
+  var _ref5$allowUtf8LocalP = _ref5.allowUtf8LocalPart;
+  let allowUtf8LocalPart = _ref5$allowUtf8LocalP === undefined ? false : _ref5$allowUtf8LocalP;
+  var _ref5$requireTld = _ref5.requireTld;
+  let requireTld = _ref5$requireTld === undefined ? true : _ref5$requireTld;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isEmail)(v, {
@@ -131,8 +151,8 @@ function stringEmail(v) {
   }
 };
 
-function stringInclusion(v, _ref5) {
-  let seed = _ref5.seed;
+function stringInclusion(v, _ref6) {
+  let seed = _ref6.seed;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.contains)(v, seed);
@@ -148,14 +168,14 @@ function stringExclusion(v) {
 };
 
 function stringFQDN(v) {
-  var _ref6 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref7 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  var _ref6$requireTld = _ref6.requireTld;
-  let requireTld = _ref6$requireTld === undefined ? true : _ref6$requireTld;
-  var _ref6$allowUnderscore = _ref6.allowUnderscores;
-  let allowUnderscores = _ref6$allowUnderscore === undefined ? false : _ref6$allowUnderscore;
-  var _ref6$allowTrailingDo = _ref6.allowTrailingDot;
-  let allowTrailingDot = _ref6$allowTrailingDo === undefined ? false : _ref6$allowTrailingDo;
+  var _ref7$requireTld = _ref7.requireTld;
+  let requireTld = _ref7$requireTld === undefined ? true : _ref7$requireTld;
+  var _ref7$allowUnderscore = _ref7.allowUnderscores;
+  let allowUnderscores = _ref7$allowUnderscore === undefined ? false : _ref7$allowUnderscore;
+  var _ref7$allowTrailingDo = _ref7.allowTrailingDot;
+  let allowTrailingDot = _ref7$allowTrailingDo === undefined ? false : _ref7$allowTrailingDo;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isFQDN)(v, {
@@ -185,9 +205,9 @@ function stringHexadecimal(v) {
 };
 
 function stringIP(v) {
-  var _ref7 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref8 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  let version = _ref7.version;
+  let version = _ref8.version;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isIP)(v, version);
@@ -197,9 +217,9 @@ function stringIP(v) {
 };
 
 function stringISBN(v) {
-  var _ref8 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref9 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  let version = _ref8.version;
+  let version = _ref9.version;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isISBN)(v, version);
@@ -225,11 +245,11 @@ function stringJSON(v) {
 };
 
 function stringLength(v) {
-  var _ref9 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref10 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  var _ref9$min = _ref9.min;
-  let min = _ref9$min === undefined ? 0 : _ref9$min;
-  let max = _ref9.max;
+  var _ref10$min = _ref10.min;
+  let min = _ref10$min === undefined ? 0 : _ref10$min;
+  let max = _ref10.max;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isLength)(v, { min, max });
@@ -254,9 +274,9 @@ function stringMACAddress(v) {
   }
 };
 
-function stringMatch(v, _ref10) {
-  let pattern = _ref10.pattern;
-  let modifiers = _ref10.modifiers;
+function stringMatch(v, _ref11) {
+  let pattern = _ref11.pattern;
+  let modifiers = _ref11.modifiers;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.matches)(v, pattern, modifiers);
@@ -274,22 +294,22 @@ function stringUppercase(c) {
 };
 
 function stringURL(v) {
-  var _ref11 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref12 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  var _ref11$protocols = _ref11.protocols;
-  let protocols = _ref11$protocols === undefined ? ['http', 'https', 'ftp'] : _ref11$protocols;
-  var _ref11$requireTld = _ref11.requireTld;
-  let requireTld = _ref11$requireTld === undefined ? true : _ref11$requireTld;
-  var _ref11$requireProtoco = _ref11.requireProtocol;
-  let requireProtocol = _ref11$requireProtoco === undefined ? true : _ref11$requireProtoco;
-  var _ref11$requireValidPr = _ref11.requireValidProtocol;
-  let requireValidProtocol = _ref11$requireValidPr === undefined ? true : _ref11$requireValidPr;
-  var _ref11$allowUnderscor = _ref11.allowUnderscores;
-  let allowUnderscores = _ref11$allowUnderscor === undefined ? false : _ref11$allowUnderscor;
-  var _ref11$allowTrailingD = _ref11.allowTrailingDot;
-  let allowTrailingDot = _ref11$allowTrailingD === undefined ? false : _ref11$allowTrailingD;
-  var _ref11$allowProtocolR = _ref11.allowProtocolRelativeUrls;
-  let allowProtocolRelativeUrls = _ref11$allowProtocolR === undefined ? false : _ref11$allowProtocolR;
+  var _ref12$protocols = _ref12.protocols;
+  let protocols = _ref12$protocols === undefined ? ['http', 'https', 'ftp'] : _ref12$protocols;
+  var _ref12$requireTld = _ref12.requireTld;
+  let requireTld = _ref12$requireTld === undefined ? true : _ref12$requireTld;
+  var _ref12$requireProtoco = _ref12.requireProtocol;
+  let requireProtocol = _ref12$requireProtoco === undefined ? true : _ref12$requireProtoco;
+  var _ref12$requireValidPr = _ref12.requireValidProtocol;
+  let requireValidProtocol = _ref12$requireValidPr === undefined ? true : _ref12$requireValidPr;
+  var _ref12$allowUnderscor = _ref12.allowUnderscores;
+  let allowUnderscores = _ref12$allowUnderscor === undefined ? false : _ref12$allowUnderscor;
+  var _ref12$allowTrailingD = _ref12.allowTrailingDot;
+  let allowTrailingDot = _ref12$allowTrailingD === undefined ? false : _ref12$allowTrailingD;
+  var _ref12$allowProtocolR = _ref12.allowProtocolRelativeUrls;
+  let allowProtocolRelativeUrls = _ref12$allowProtocolR === undefined ? false : _ref12$allowProtocolR;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isURL)(v, {
@@ -307,9 +327,9 @@ function stringURL(v) {
 };
 
 function stringUUID(v) {
-  var _ref12 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var _ref13 = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  let version = _ref12.version;
+  let version = _ref13.version;
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.isUUID)(v, version);

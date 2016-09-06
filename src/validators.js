@@ -1,5 +1,8 @@
 import {
   isString,
+  isNumber,
+  isInteger,
+  isFloat,
   isPresent,
   isAbsent,
   isArray
@@ -55,6 +58,18 @@ export function blockValue(v, {block}, options={}) {
 export function BSONObjectID(v) {
   return ObjectID.isValid(v);
 };
+
+export function numberSize(v, {min, minOrEqual, max, maxOrEqual}={}) {
+  if (isNumber(v)) {
+    if (isNumber(min) && !(v > min)) return false;
+    if (isNumber(minOrEqual) && !(v >= minOrEqual)) return false;
+    if (isNumber(max) && !(v < max)) return false;
+    if (isNumber(maxOrEqual) && !(v <= maxOrEqual)) return false;
+    return true;
+  } else {
+    return false;
+  }
+}
 
 export function presence(v) {
   return isPresent(v);
