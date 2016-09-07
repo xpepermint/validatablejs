@@ -1,6 +1,6 @@
 {
   "name": "validatable",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "A library for synchronous and asynchronous validation.",
   "main": "./dist/index.js",
   "ava": {
@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "mongodb": "2.2.9",
-    "typeable": "0.3.1",
+    "typeable": "0.3.2",
     "validator": "5.6.0"
   }
 }
