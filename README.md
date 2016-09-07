@@ -18,10 +18,10 @@ import {Validator} from 'validatable';
 let v = new Validator({
   firstErrorOnly: true,
   errorBuilder: async (value, definition) => ({message: definition.message}), // for custom error messages
-  validators: { // custom validators (will be merged with built-in validators; existing validatorscan be overriden)
+  validators: { // custom validators (will be merged with built-in validators; existing validators can be overridden)
     coolness: async (value, definition) => value === 'cool'
   },
-  context: null // context is passed to all validators
+  context: null // context is applied to each validator
 });
 
 let errors = await v.validate(
