@@ -63,7 +63,7 @@ function arrayExclusion(v) {
 function blockValue(v) {
   let definition = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
-  return definition.block(v, definition);
+  return definition.block.call(this, v, definition);
 };
 
 function BSONObjectID(v) {

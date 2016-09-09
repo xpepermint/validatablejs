@@ -52,7 +52,7 @@ export function arrayExclusion(v, definition={}) {
 };
 
 export function blockValue(v, definition={}) {
-  return definition.block(v, definition);
+  return definition.block.call(this, v, definition);
 };
 
 export function BSONObjectID(v) {
