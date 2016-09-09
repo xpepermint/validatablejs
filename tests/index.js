@@ -58,3 +58,17 @@ test('Validator.validate with custom errorBuilder', async (t) => {
 
   t.deepEqual(result, [{message: 'is required'}, {message: 'must be foo'}]);
 });
+
+test('Validator.validate with validator message as function', async (t) => {
+  let v = new Validator();
+  let result = await v.validate(
+    '',
+    {
+      presence: {
+        message: (v, d) => 'is required'
+      }
+    }
+  );
+
+  t.deepEqual(result, ['is required']);
+});

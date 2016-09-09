@@ -1,10 +1,16 @@
 import * as defaultValidators from './validators';
 
+export function defaultErrorBuilder(error, definition) {
+  let {message} = definition;
+  let isString = typeof message === 'string';
+  return isString ? message : message.call(this, error, definition);
+}
+
 export class Validator {
 
   constructor({
     firstErrorOnly=false,
-    errorBuilder=(value, {message}) => message,
+    errorBuilder=defaultErrorBuilder,
     validators={},
     context=null
   }={}) {

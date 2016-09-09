@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.Validator = undefined;
+exports.defaultErrorBuilder = defaultErrorBuilder;
 
 var _validators = require('./validators');
 
@@ -13,6 +14,13 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
+function defaultErrorBuilder(error, definition) {
+  let message = definition.message;
+
+  let isString = typeof message === 'string';
+  return isString ? message : message.call(this, error, definition);
+}
+
 class Validator {
 
   constructor() {
@@ -21,10 +29,7 @@ class Validator {
     var _ref$firstErrorOnly = _ref.firstErrorOnly;
     let firstErrorOnly = _ref$firstErrorOnly === undefined ? false : _ref$firstErrorOnly;
     var _ref$errorBuilder = _ref.errorBuilder;
-    let errorBuilder = _ref$errorBuilder === undefined ? (value, _ref2) => {
-      let message = _ref2.message;
-      return message;
-    } : _ref$errorBuilder;
+    let errorBuilder = _ref$errorBuilder === undefined ? defaultErrorBuilder : _ref$errorBuilder;
     var _ref$validators = _ref.validators;
     let validators = _ref$validators === undefined ? {} : _ref$validators;
     var _ref$context = _ref.context;

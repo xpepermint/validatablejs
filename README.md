@@ -27,11 +27,11 @@ let v = new Validator({
 let errors = await v.validate(
   'John Smith',
   {
-    presence: {
-      message: 'must be present'
+    presence: { // built-in validator name
+      message: 'must be present' // error message (can be a function)
     },
-    coolness: {
-      message: 'must be cool'
+    coolness: { // custom validator name
+      message: 'must be cool' // error message (can be a function)
     }
   }
 ); // -> [{message: 'must be present'}]
