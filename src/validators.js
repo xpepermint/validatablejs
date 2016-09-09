@@ -47,12 +47,12 @@ export function arrayInclusion(v, {values=[]}={}) {
   }
 };
 
-export function arrayExclusion(v, options={}) {
-  return !arrayInclusion(v, options);
+export function arrayExclusion(v, definition={}) {
+  return !arrayInclusion(v, definition);
 };
 
-export function blockValue(v, {block}, options={}) {
-  return block(v, options);
+export function blockValue(v, definition={}) {
+  return definition.block(v, definition);
 };
 
 export function BSONObjectID(v) {
@@ -127,8 +127,8 @@ export function stringInclusion(v, {seed}) {
   }
 };
 
-export function stringExclusion(v, options={}) {
-  return !stringInclusion(v, options);
+export function stringExclusion(v, definition={}) {
+  return !stringInclusion(v, definition);
 };
 
 export function stringFQDN(v, {requireTld=true, allowUnderscores=false, allowTrailingDot=false}={}) {

@@ -1,6 +1,6 @@
 {
   "name": "validatable",
-  "version": "0.3.15",
+  "version": "0.3.16",
   "description": "A library for synchronous and asynchronous validation.",
   "main": "./dist/index.js",
   "ava": {
