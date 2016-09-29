@@ -69,25 +69,25 @@ let errors = await v.validate(
 
 > Validates that the specified field is not in an array of values.
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| values | Array | Yes | Array of restricted values.
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| values | Array | Yes | - | Array of restricted values.
 
 #### arrayInclusion
 
 > Validates that the specified field is in an array of values.
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| values | Array | Yes | Array of allowed values.
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| values | Array | Yes | - | Array of allowed values.
 
 #### blockValue
 
 > Validates the specified field against the provided block function. If the function returns true then the field is treated as valid.
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| block | Function | Yes | Synchronous or asynchronous function (e.g. `async () => true`)
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| block | Function | Yes | - | Synchronous or asynchronous function (e.g. `async () => true`)
 
 ```js
 let definition = {
@@ -104,12 +104,12 @@ let definition = {
 
 > Validates the size of a number.
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| min | Number | No | Allowed minimum value.
-| minOrEqual | Number | No | Allowed minimum value (allowing equal).
-| max | Number | No | Allowed maximum value.
-| maxOrEqual | Number | No | Allowed maximum value (allowing equal).
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| min | Number | No | - | Allowed minimum value.
+| minOrEqual | Number | No | - | Allowed minimum value (allowing equal).
+| max | Number | No | - | Allowed maximum value.
+| maxOrEqual | Number | No | - | Allowed maximum value (allowing equal).
 
 #### presence
 
@@ -128,7 +128,7 @@ let definition = {
 > Validates that the specified field is a date string.
 
 | Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
+|--------|------|----------|----------|-----------
 | format | String | No | - | Date format (possible value is `iso8601`).
 
 #### stringEmail
@@ -136,7 +136,7 @@ let definition = {
 > Validates that the specified field is an email.
 
 | Option | Type | Required | Default | Description
-|--------|------|----------|----------|------------
+|--------|------|----------|---------|------------
 | allowDisplayName | Boolean | No | false | When set to true, the validator will also match `name <address>`.
 | allowUtf8LocalPart | Boolean | No | false | When set to false, the validator will not allow any non-English UTF8 character in email address' local part.
 | requireTld | Boolean | No | true | When set to false, email addresses without having TLD in their domain will also be matched.
@@ -146,18 +146,18 @@ let definition = {
 > Checks if the string does not contain the seed.
 
 | Option | Type | Required | Default | Description
-|--------|------|---------|----------|------------
+|--------|------|----------|---------|------------
 | seed | String | Yes | - | The seed which should exist in the string.
 
 #### stringFQDN
 
 > Validates that the specified field is a fully qualified domain name (e.g. domain.com).
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| requireTld | Boolean | No | Require top-level domain name.
-| allowUnderscores | Boolean | No | Allow string to include underscores.
-| allowTrailingDot | Boolean | No | Allow string to include a trailing dot.
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| requireTld | Boolean | No | true | Require top-level domain name.
+| allowUnderscores | Boolean | No | false | Allow string to include underscores.
+| allowTrailingDot | Boolean | No | false | Allow string to include a trailing dot.
 
 #### stringHexColor
 
@@ -172,7 +172,7 @@ let definition = {
 > Checks if the string contains the seed.
 
 | Option | Type | Required | Default | Description
-|--------|------|---------|----------|------------
+|--------|------|----------|---------|------------
 | seed | String | Yes | - | The seed which should exist in the string.
 
 #### stringIP
@@ -180,7 +180,7 @@ let definition = {
 > Validates that the specified field is an IP.
 
 | Option | Type | Required | Default | Description
-|--------|------|----------|---------|-------------
+|--------|------|----------|---------|------------
 | version | Integer | No | - | IP version (4 or 6).
 
 #### stringISBN
@@ -204,7 +204,7 @@ let definition = {
 > Validates the length of the specified field.
 
 | Option | Type | Required | Default | Description
-|--------|------|----------|----------|------------
+|--------|------|----------|---------|------------
 | min | Number | No | 0 | Minimum number of characters.
 | max | Number | No | - | Maximum number of characters.
 
@@ -220,10 +220,10 @@ let definition = {
 
 > Validates that the specified field matches the pattern.
 
-| Key | Type | Required | Description
-|-----|------|----------|------------
-| pattern | String | Yes | Regular expression pattern.
-| modifiers | String | No | Regular expression modifiers.
+| Key | Type | Required | Default | Description
+|-----|------|----------|---------|------------
+| pattern | String | Yes | - | Regular expression pattern.
+| modifiers | String | No | - | Regular expression modifiers.
 
 #### stringUppercase
 
@@ -247,9 +247,9 @@ let definition = {
 
 > Validates that the specified field is a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
-| Option | Type | Required | Description
-|--------|------|----------|------------
-| version | Integer | No | UUID version (3, 4 or 5).
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| version | Integer | No | - | UUID version (3, 4 or 5).
 
 ## License (MIT)
 
