@@ -28,71 +28,66 @@ import {
   matches,
   isUppercase,
   isURL,
-  isUUID
+  isUUID,
+  isMongoId
 } from 'validator';
 
-import {
-  ObjectID
-} from 'mongodb';
-
-export function absence(v) {
+export function absence (v) {
   return isAbsent(v);
 };
 
-export function arrayInclusion(v, {values=[]}={}) {
+export function arrayInclusion (v, {values=[]}={}) {
   if (isArray(values)) {
     return values.findIndex((i) => i === v) !== -1;
-  } else {
+  }
+  else {
     return false;
   }
 };
 
-export function arrayExclusion(v, definition={}) {
+export function arrayExclusion (v, definition={}) {
   return !arrayInclusion(v, definition);
 };
 
-export function blockValue(v, definition={}) {
+export function blockValue (v, definition={}) {
   return definition.block.call(this, v, definition);
 };
 
-export function BSONObjectID(v) {
-  return ObjectID.isValid(v);
+export function BSONObjectID (v) {
+  if (isString(v)) {
+    return isMongoId(v);
+  }
+  else if (v.toString) {
+    return isMongoId(v.toString());
+  }
+  return false;
 };
 
-export function numberSize(v, {min, minOrEqual, max, maxOrEqual}={}) {
+export function numberSize (v, {min, minOrEqual, max, maxOrEqual}={}) {
   if (isNumber(v)) {
     if (isNumber(min) && !(v > min)) return false;
     if (isNumber(minOrEqual) && !(v >= minOrEqual)) return false;
     if (isNumber(max) && !(v < max)) return false;
     if (isNumber(maxOrEqual) && !(v <= maxOrEqual)) return false;
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
-export function presence(v) {
+export function presence (v) {
   return isPresent(v);
 };
 
-export function stringBase64(v) {
-  if (isString(v)) {
-    return isBase64(v);
-  } else {
-    return false;
-  }
+export function stringBase64 (v) {
+  return isString(v) ? isBase64(v) : false;
 };
 
-export function stringCreditCard(v) {
-  if (isString(v)) {
-    return isCreditCard(v);
-  } else {
-    return false;
-  }
+export function stringCreditCard (v) {
+  return isString(v) ? isCreditCard(v) : false;
 };
 
-export function stringDate(v, {format}={}) {
-  function isFormat(v, format) {
+export function stringDate (v, {format}={}) {
+  function isFormat (v, format) {
     if (!format) return true;
     switch(format) {
       case 'iso8601':
@@ -107,131 +102,84 @@ export function stringDate(v, {format}={}) {
   return true;
 };
 
-export function stringEmail(v, {allowDisplayName=false, allowUtf8LocalPart=false, requireTld=true}={}) {
+export function stringEmail (v, {allowDisplayName=false, allowUtf8LocalPart=false, requireTld=true}={}) {
   if (isString(v)) {
     return isEmail(v, {
       allow_display_name: allowDisplayName,
       allow_utf8_local_part: allowUtf8LocalPart,
       require_tld: requireTld
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
-export function stringInclusion(v, {seed}) {
+export function stringInclusion (v, {seed}) {
   if (isString(v)) {
     return contains(v, seed);
-  } else {
-    return false;
   }
+  return false;
 };
 
 export function stringExclusion(v, definition={}) {
   return !stringInclusion(v, definition);
 };
 
-export function stringFQDN(v, {requireTld=true, allowUnderscores=false, allowTrailingDot=false}={}) {
+export function stringFQDN (v, {requireTld=true, allowUnderscores=false, allowTrailingDot=false}={}) {
   if (isString(v)) {
     return isFQDN(v, {
       require_tld: requireTld,
       allow_underscores: allowUnderscores,
       allow_trailing_dot: allowTrailingDot
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
-export function stringHexColor(v) {
-  if (isString(v)) {
-    return isHexColor(v);
-  } else {
-    return false;
-  }
+export function stringHexColor (v) {
+  return isString(v) ? isHexColor(v) : false;
 };
 
-export function stringHexadecimal(v) {
-  if (isString(v)) {
-    return isHexadecimal(v);
-  } else {
-    return false;
-  }
+export function stringHexadecimal (v) {
+  return isString(v) ? isHexadecimal(v) : false;
 };
 
-export function stringIP(v, {version}={}) {
-  if (isString(v)) {
-    return isIP(v, version);
-  } else {
-    return false;
-  }
+export function stringIP (v, {version}={}) {
+  return isString(v) ? isIP(v, version) : false;
 };
 
-export function stringISBN(v, {version}={}) {
-  if (isString(v)) {
-    return isISBN(v, version);
-  } else {
-    return false;
-  }
+export function stringISBN (v, {version}={}) {
+  return isString(v) ? isISBN(v, version) : false;
 };
 
-export function stringISIN(v) {
-  if (isString(v)) {
-    return isISIN(v);
-  } else {
-    return false;
-  }
+export function stringISIN (v) {
+  return isString(v) ? isISIN(v) : false;
 };
 
-export function stringJSON(v) {
-  if (isString(v)) {
-    return isJSON(v);
-  } else {
-    return false;
-  }
+export function stringJSON (v) {
+  return isString(v) ? isJSON(v) : false;
 };
 
-export function stringLength(v, {min=0, max}={}) {
-  if (isString(v)) {
-    return isLength(v, {min, max});
-  } else {
-    return false;
-  }
+export function stringLength (v, {min=0, max}={}) {
+  return isString(v) ? isLength(v, {min, max}) : false;
 };
 
-export function stringLowercase(v) {
-  if (isString(v)) {
-    return isLowercase(v);
-  } else {
-    return false;
-  }
+export function stringLowercase (v) {
+  return isString(v) ? isLowercase(v) : false;
 };
 
-export function stringMACAddress(v) {
-  if (isString(v)) {
-    return isMACAddress(v);
-  } else {
-    return false;
-  }
+export function stringMACAddress (v) {
+  return isString(v) ? isMACAddress(v) : false;
 };
 
-export function stringMatch(v, {pattern, modifiers}) {
-  if (isString(v)) {
-    return matches(v, pattern, modifiers);
-  } else {
-    return false;
-  }
+export function stringMatch (v, {pattern, modifiers}) {
+  return isString(v) ? matches(v, pattern, modifiers) : false;
 };
 
-export function stringUppercase(c) {
-  if (isString(c)) {
-    return isUppercase(c);
-  } else {
-    return false;
-  }
+export function stringUppercase (v) {
+  return isString(v) ? isUppercase(v) : false;
 };
 
-export function stringURL(v, {protocols=['http', 'https', 'ftp'], requireTld=true, requireProtocol=true, requireValidProtocol=true, allowUnderscores=false, allowTrailingDot=false, allowProtocolRelativeUrls=false}={}) {
+export function stringURL (v, {protocols=['http', 'https', 'ftp'], requireTld=true, requireProtocol=true, requireValidProtocol=true, allowUnderscores=false, allowTrailingDot=false, allowProtocolRelativeUrls=false}={}) {
   if (isString(v)) {
     return isURL(v, {
       protocols: protocols,
@@ -242,15 +190,10 @@ export function stringURL(v, {protocols=['http', 'https', 'ftp'], requireTld=tru
       allow_trailing_dot: allowTrailingDot,
       allow_protocol_relative_urls: allowProtocolRelativeUrls
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
-export function stringUUID(v, {version}={}) {
-  if (isString(v)) {
-    return isUUID(v, version);
-  } else {
-    return false;
-  }
+export function stringUUID (v, {version}={}) {
+  return isString(v) ? isUUID(v, version) : false;
 };

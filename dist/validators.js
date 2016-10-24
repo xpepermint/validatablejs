@@ -35,8 +35,6 @@ var _typeable = require('typeable');
 
 var _validator = require('validator');
 
-var _mongodb = require('mongodb');
-
 function absence(v) {
   return (0, _typeable.isAbsent)(v);
 };
@@ -67,7 +65,12 @@ function blockValue(v) {
 };
 
 function BSONObjectID(v) {
-  return _mongodb.ObjectID.isValid(v);
+  if ((0, _typeable.isString)(v)) {
+    return (0, _validator.isMongoId)(v);
+  } else if (v.toString) {
+    return (0, _validator.isMongoId)(v.toString());
+  }
+  return false;
 };
 
 function numberSize(v) {
@@ -84,9 +87,8 @@ function numberSize(v) {
     if ((0, _typeable.isNumber)(max) && !(v < max)) return false;
     if ((0, _typeable.isNumber)(maxOrEqual) && !(v <= maxOrEqual)) return false;
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
 function presence(v) {
@@ -94,19 +96,11 @@ function presence(v) {
 };
 
 function stringBase64(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isBase64)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isBase64)(v) : false;
 };
 
 function stringCreditCard(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isCreditCard)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isCreditCard)(v) : false;
 };
 
 function stringDate(v) {
@@ -145,9 +139,8 @@ function stringEmail(v) {
       allow_utf8_local_part: allowUtf8LocalPart,
       require_tld: requireTld
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
 function stringInclusion(v, _ref5) {
@@ -155,9 +148,8 @@ function stringInclusion(v, _ref5) {
 
   if ((0, _typeable.isString)(v)) {
     return (0, _validator.contains)(v, seed);
-  } else {
-    return false;
   }
+  return false;
 };
 
 function stringExclusion(v) {
@@ -182,25 +174,16 @@ function stringFQDN(v) {
       allow_underscores: allowUnderscores,
       allow_trailing_dot: allowTrailingDot
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
 function stringHexColor(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isHexColor)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isHexColor)(v) : false;
 };
 
 function stringHexadecimal(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isHexadecimal)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isHexadecimal)(v) : false;
 };
 
 function stringIP(v) {
@@ -208,11 +191,7 @@ function stringIP(v) {
 
   let version = _ref7.version;
 
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isIP)(v, version);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isIP)(v, version) : false;
 };
 
 function stringISBN(v) {
@@ -220,27 +199,15 @@ function stringISBN(v) {
 
   let version = _ref8.version;
 
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isISBN)(v, version);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isISBN)(v, version) : false;
 };
 
 function stringISIN(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isISIN)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isISIN)(v) : false;
 };
 
 function stringJSON(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isJSON)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isJSON)(v) : false;
 };
 
 function stringLength(v) {
@@ -250,46 +217,26 @@ function stringLength(v) {
   let min = _ref9$min === undefined ? 0 : _ref9$min;
   let max = _ref9.max;
 
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isLength)(v, { min, max });
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isLength)(v, { min, max }) : false;
 };
 
 function stringLowercase(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isLowercase)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isLowercase)(v) : false;
 };
 
 function stringMACAddress(v) {
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isMACAddress)(v);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isMACAddress)(v) : false;
 };
 
 function stringMatch(v, _ref10) {
   let pattern = _ref10.pattern;
   let modifiers = _ref10.modifiers;
 
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.matches)(v, pattern, modifiers);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.matches)(v, pattern, modifiers) : false;
 };
 
-function stringUppercase(c) {
-  if ((0, _typeable.isString)(c)) {
-    return (0, _validator.isUppercase)(c);
-  } else {
-    return false;
-  }
+function stringUppercase(v) {
+  return (0, _typeable.isString)(v) ? (0, _validator.isUppercase)(v) : false;
 };
 
 function stringURL(v) {
@@ -320,9 +267,8 @@ function stringURL(v) {
       allow_trailing_dot: allowTrailingDot,
       allow_protocol_relative_urls: allowProtocolRelativeUrls
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
 function stringUUID(v) {
@@ -330,9 +276,5 @@ function stringUUID(v) {
 
   let version = _ref12.version;
 
-  if ((0, _typeable.isString)(v)) {
-    return (0, _validator.isUUID)(v, version);
-  } else {
-    return false;
-  }
+  return (0, _typeable.isString)(v) ? (0, _validator.isUUID)(v, version) : false;
 };
