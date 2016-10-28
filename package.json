@@ -1,6 +1,6 @@
 {
   "name": "validatable",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "A library for synchronous and asynchronous validation.",
   "main": "./dist/index.js",
   "ava": {
@@ -42,7 +42,7 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "0.16.x",
-    "babel-cli": "6.16.x",
+    "babel-cli": "6.18.x",
     "babel-preset-node5": "11.1.x"
   },
   "dependencies": {

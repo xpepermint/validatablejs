@@ -34,7 +34,7 @@ let errors = await v.validate(
       message: 'must be cool' // error message (can be a function)
     }
   }
-); // -> [{message: 'must be present'}]
+); // -> ['must be present']
 ```
 
 ## API
@@ -46,7 +46,7 @@ let errors = await v.validate(
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | firstErrorOnly | Boolean | No | false | When set to `true`, only the first error is returned otherwise all validation errors are returned.
-| errorBuilder | Function/Promise | No | (value, {message}) => message | A method for constructing a custom validation error message.
+| errorBuilder | Function/Promise | No | (name, value, {message}) => message | A method for constructing a custom validation error message.
 | validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
 | context | Object | No | null | A custom context reference which is applied to each validator method.
 

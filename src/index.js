@@ -1,9 +1,9 @@
 import * as defaultValidators from './validators';
 
-export function defaultErrorBuilder(error, definition) {
+export function defaultErrorBuilder(name, value, definition) {
   let {message} = definition;
   let isString = typeof message === 'string';
-  return isString ? message : message.call(this, error, definition);
+  return isString ? message : message.call(this, value, definition);
 }
 
 export class Validator {
@@ -33,7 +33,7 @@ export class Validator {
 
       let isValid = await validator.call(this.context, value, definition);
       if (!isValid) {
-        let error = await this.errorBuilder.call(this.context, value, definition);
+        let error = await this.errorBuilder.call(this.context, name, value, definition);
         errors.push(error);
 
         if (this.firstErrorOnly) break;

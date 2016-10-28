@@ -41,7 +41,7 @@ test('Validator.validate with onlyFirstError=true', async (t) => {
 
 test('Validator.validate with custom errorBuilder', async (t) => {
   let v = new Validator({
-    errorBuilder: (value, {message}) => ({message})
+    errorBuilder: (name, value, {message}) => ({message})
   });
   let result = await v.validate(
     '',

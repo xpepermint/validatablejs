@@ -14,11 +14,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
-function defaultErrorBuilder(error, definition) {
+function defaultErrorBuilder(name, value, definition) {
   let message = definition.message;
 
   let isString = typeof message === 'string';
-  return isString ? message : message.call(this, error, definition);
+  return isString ? message : message.call(this, value, definition);
 }
 
 class Validator {
@@ -60,7 +60,7 @@ class Validator {
 
         let isValid = yield validator.call(_this.context, value, definition);
         if (!isValid) {
-          let error = yield _this.errorBuilder.call(_this.context, value, definition);
+          let error = yield _this.errorBuilder.call(_this.context, name, value, definition);
           errors.push(error);
 
           if (_this.firstErrorOnly) break;
