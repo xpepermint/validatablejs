@@ -17,7 +17,7 @@ import {Validator} from 'validatable';
 
 let v = new Validator({
   firstErrorOnly: true,
-  errorBuilder: async (value, definition) => ({message: definition.message}), // for custom error messages
+  errorBuilder: async (name, value, {message}) => ({name, message}), // for custom error messages
   validators: { // custom validators (will be merged with built-in validators; existing validators can be overridden)
     coolness: async (value, definition) => value === 'cool'
   },
@@ -34,7 +34,7 @@ let errors = await v.validate(
       message: 'must be cool' // error message (can be a function)
     }
   }
-); // -> ['must be present']
+); // -> [{name: 'presence', message: 'must be present'}]
 ```
 
 ## API
