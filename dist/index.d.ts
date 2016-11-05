@@ -4,7 +4,7 @@ export interface RecipeObject {
     message: string | (() => string);
     [key: string]: any;
 }
-export declare class ValidationError extends Error {
+export declare class ValidatorError extends Error {
     value: any;
     recipe: RecipeObject;
     code: number;
@@ -23,6 +23,6 @@ export declare class Validator {
         };
         context?: any;
     });
-    createValidationError(value: any, recipe: RecipeObject): ValidationError;
+    createValidatorError(value: any, recipe: RecipeObject): ValidatorError;
     validate(value: any, recipes?: RecipeObject[]): Promise<any[]>;
 }

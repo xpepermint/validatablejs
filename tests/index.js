@@ -1,5 +1,5 @@
 import test from 'ava';
-import {Validator, ValidationError} from '../dist/index';
+import {Validator, ValidatorError} from '../dist/index';
 
 test('Validator.validate', async (t) => {
   let v = new Validator({
@@ -12,8 +12,8 @@ test('Validator.validate', async (t) => {
   let errors = await v.validate('', recipes);
 
   t.is(errors.length, 2);
-  t.is(errors[0] instanceof ValidationError, true);
-  t.is(errors[0].name, 'ValidationError');
+  t.is(errors[0] instanceof ValidatorError, true);
+  t.is(errors[0].name, 'ValidatorError');
   t.is(errors[0].message, 'is required');
   t.deepEqual(errors[0].recipe, recipes[0]);
   t.deepEqual(errors[1].recipe, recipes[1]);

@@ -36,14 +36,14 @@ let e = await v.validate(
       message: 'must be present' // validator options
     }
   ]
-); // -> list of ValidationError instances or an empty array
+); // -> list of ValidatorError instances or an empty array
 ```
 
 See the `./tests` folder for details.
 
 ## API
 
-**ValidationError(recipe, value, code)**
+**ValidatorError(recipe, value, code)**
 
 > Validation error class which holds information about the invalid value.
 
@@ -75,7 +75,7 @@ let v = new Validator({
 });
 ```
 
-**Validator.prototype.createValidationError(value, recipe)**: ValidationError
+**Validator.prototype.createValidatorError(value, recipe)**: ValidatorError
 
 > Validates a value against the provided options.
 
@@ -84,7 +84,7 @@ let v = new Validator({
 | value | Any | Yes | - | A value to validate.
 | recipe | Object | No | null | A configuration object describing a validator.
 
-**Validator.prototype.validate(value, recipes)**: Promise<ValidationError[]>
+**Validator.prototype.validate(value, recipes)**: Promise<ValidatorError[]>
 
 > Validates a value against the provided options.
 

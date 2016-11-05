@@ -20,7 +20,7 @@ export interface RecipeObject {
 * A validation error class.
 */
 
-export class ValidationError extends Error {
+export class ValidatorError extends Error {
   public value: any;
   public recipe: RecipeObject;
   public code: number;
@@ -75,11 +75,11 @@ export class Validator {
   }
 
   /*
-  * Returns a new instance of ValidationError instance.
+  * Returns a new instance of ValidatorError instance.
   */
 
-  public createValidationError (value: any, recipe: RecipeObject): ValidationError {
-    return new ValidationError(value, recipe);
+  public createValidatorError (value: any, recipe: RecipeObject): ValidatorError {
+    return new ValidatorError(value, recipe);
   }
 
   /*
@@ -103,7 +103,7 @@ export class Validator {
       let isValid = await validator.call(this.context, value, recipe);
       if (!isValid) {
         errors.push(
-          this.createValidationError(value, recipe)
+          this.createValidatorError(value, recipe)
         );
 
         if (this.firstErrorOnly) break;

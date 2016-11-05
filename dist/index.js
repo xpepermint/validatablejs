@@ -11,7 +11,7 @@ const builtInValidators = require('./validators');
 /*
 * A validation error class.
 */
-class ValidationError extends Error {
+class ValidatorError extends Error {
     /*
     * Class constructor.
     */
@@ -26,7 +26,7 @@ class ValidationError extends Error {
         this.code = code;
     }
 }
-exports.ValidationError = ValidationError;
+exports.ValidatorError = ValidatorError;
 /*
 * A core validation class.
 */
@@ -40,10 +40,10 @@ class Validator {
         this.context = context;
     }
     /*
-    * Returns a new instance of ValidationError instance.
+    * Returns a new instance of ValidatorError instance.
     */
-    createValidationError(value, recipe) {
-        return new ValidationError(value, recipe);
+    createValidatorError(value, recipe) {
+        return new ValidatorError(value, recipe);
     }
     /*
     * Validates the `value` against the `validations`.
@@ -59,7 +59,7 @@ class Validator {
                 }
                 let isValid = yield validator.call(this.context, value, recipe);
                 if (!isValid) {
-                    errors.push(this.createValidationError(value, recipe));
+                    errors.push(this.createValidatorError(value, recipe));
                     if (this.firstErrorOnly)
                         break;
                 }
