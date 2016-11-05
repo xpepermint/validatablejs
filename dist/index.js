@@ -40,7 +40,7 @@ class Validator {
         this.context = context;
     }
     /*
-    * Returns a new instance of validation error.
+    * Returns a new instance of ValidationError instance.
     */
     createValidationError(value, recipe) {
         return new ValidationError(value, recipe);

@@ -75,7 +75,7 @@ export class Validator {
   }
 
   /*
-  * Returns a new instance of validation error.
+  * Returns a new instance of ValidationError instance.
   */
 
   public createValidationError (value: any, recipe: RecipeObject): ValidationError {
