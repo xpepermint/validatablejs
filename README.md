@@ -74,7 +74,7 @@ let v = new Validator({
 | value | Any | Yes | - | A value to validate.
 | recipe | Object | No | null | A configuration object describing a validator.
 
-**Validator.prototype.validate(value, recipes)**: Promise<ValidatorError[]>
+**Validator.prototype.validate(value, recipes)**: Promise(ValidatorError[])
 
 > Validates a value against the provided options.
 
