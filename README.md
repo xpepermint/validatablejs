@@ -32,22 +32,24 @@ let e = await v.validate(
   'John Smith', // value to validate
   [ // list of validations
     {
-      name: 'isPresent', // validator name
+      name: 'presence', // validator name
       message: 'must be present' // validator options
     }
   ]
-); // -> list of ValidatorError instances
+); // -> list of ValidatorError instances or an empty array
 ```
+
+See the `./tests` folder for details.
 
 ## API
 
-**ValidationError(validation, value, code)**
+**ValidationError(recipe, value, code)**
 
 > Validation error class which holds information about the invalid value.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| validation | Object | Yes | - | Validator definition.
+| recipe | Object | Yes | - | Validator recipe object.
 | value | Any | Yes | - | The value which failed to pass the validation.
 | code | Integer | No | 422 | Error status code.
 
@@ -67,32 +69,32 @@ import {Validator, ValidationError} from 'validatable';
 
 let v = new Validator({
   firstErrorOnly: true,
-  error: ValidationError,
+  validationError: ValidationError,
   validators: {
-    async coolness (value, validation) { return value === 'cool' } // custom validator
+    async coolness ({value, recipe}}) { return value === 'cool' } // custom validator
   },
   context: null
 });
 ```
 
-**Validator.prototype.validate(value, validations): Promise<Boolean>**
+**Validator.prototype.validate(value, recipes): Promise<Boolean>**
 
 > Validates a value against the provided options.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | value | Any | Yes | - | A value to validate.
-| validations | Array | Yes | - | A list of validation objects.
+| recipes | Array | Yes | [] | A configuration object describing validators.
 
 ```js
 let value = 'John Smith';
-let validations = [
+let recipes = [
   {
-    name: 'isPresent', // validator name
+    name: 'presence', // validator name
     message: 'must be present' // validation error message
   }
 ];
-await v.validate(value, validations);
+await v.validate(value, recipes);
 ```
 
 ### Built-in Validators
@@ -126,9 +128,10 @@ await v.validate(value, validations);
 | block | Function,Promise | Yes | - | Synchronous or asynchronous function (e.g. `async () => true`)
 
 ```js
-let definition = {
-  async block (value, options) { return true },
-  message: 'must be present'
+let recipe = {
+  name: 'block',
+  message: 'must be present',
+  async block ({value, recipe}) { return true }
 };
 ```
 

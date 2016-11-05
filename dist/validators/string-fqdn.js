@@ -1,12 +1,12 @@
 "use strict";
 const typeable_1 = require('typeable');
-function stringFQDN(v, { requireTld = true, allowUnderscores = false, allowTrailingDot = false } = {}) {
-    if (!typeable_1.isString(v))
+function stringFQDN(value, { requireTld = true, allowUnderscores = false, allowTrailingDot = false } = {}) {
+    if (!typeable_1.isString(value))
         return false;
-    if (allowTrailingDot && v[v.length - 1] === '.') {
-        v = v.substring(0, v.length - 1);
+    if (allowTrailingDot && value[value.length - 1] === '.') {
+        value = value.substring(0, value.length - 1);
     }
-    let parts = v.split('.');
+    let parts = value.split('.');
     if (requireTld) {
         let tld = parts.pop();
         if (!parts.length || !/^([a-z\u00a1-\uffff]{2,}|xn[a-z0-9-]{2,})$/i.test(tld)) {

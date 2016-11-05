@@ -3,10 +3,8 @@ import {
   toString
 } from 'typeable';
 
-export function stringInclusion (v: any, d: {seed?: any} = {}): boolean {
-  if (!isString(v)) {
-    return false;
-  }
+export function stringInclusion (value: any, {seed}: {seed?: any} = {}): boolean {
+  if (!isString(value)) return false;
 
-  return v.indexOf(toString(d.seed)) >= 0;
+  return value.indexOf(toString(seed)) >= 0;
 }

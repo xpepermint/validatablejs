@@ -1,4 +1,4 @@
-export declare function stringFQDN(v: any, {requireTld, allowUnderscores, allowTrailingDot}?: {
+export declare function stringFQDN(value: any, {requireTld, allowUnderscores, allowTrailingDot}?: {
     requireTld?: boolean;
     allowUnderscores?: boolean;
     allowTrailingDot?: boolean;

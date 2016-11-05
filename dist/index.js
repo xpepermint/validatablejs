@@ -15,13 +15,13 @@ class ValidationError extends Error {
     /*
     * Class constructor.
     */
-    constructor(validation, value, code = 422) {
-        let message = typeof validation.message === 'function'
-            ? validation.message()
-            : validation.message;
+    constructor(recipe, value = null, code = 422) {
+        let message = typeof recipe.message === 'function'
+            ? recipe.message()
+            : recipe.message;
         super(message);
         this.name = this.constructor.name;
-        this.validation = Object.assign({}, validation, { message });
+        this.recipe = Object.assign({}, recipe, { message });
         this.value = value;
         this.code = code;
     }
@@ -34,7 +34,7 @@ class Validator {
     /*
     * Class constructor.
     */
-    constructor({ firstErrorOnly = false, validationError = ValidationError, validators = null, context = null } = {}) {
+    constructor({ firstErrorOnly = false, validationError = ValidationError, validators = {}, context = null } = {}) {
         this.firstErrorOnly = firstErrorOnly;
         this.validationError = validationError;
         this.validators = Object.assign({}, builtInValidators, validators);
@@ -43,18 +43,18 @@ class Validator {
     /*
     * Validates the `value` against the `validations`.
     */
-    validate(value, validations) {
+    validate(value, recipes) {
         return __awaiter(this, void 0, void 0, function* () {
             let errors = [];
-            for (let validation of validations) {
-                let { name } = validation;
+            for (let recipe of recipes) {
+                let { name } = recipe;
                 let validator = this.validators[name];
                 if (!validator) {
                     throw new Error(`Unknown validator ${name}`);
                 }
-                let isValid = yield validator.call(this.context, value, validation);
+                let isValid = yield validator.call(this.context, value, recipe);
                 if (!isValid) {
-                    errors.push(new this.validationError(validation, value));
+                    errors.push(new this.validationError(recipe, value));
                     if (this.firstErrorOnly)
                         break;
                 }

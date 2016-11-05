@@ -1,6 +1,6 @@
 "use strict";
 const typeable_1 = require('typeable');
-function presence(v) {
-    return typeable_1.isPresent(v);
+function presence(value) {
+    return typeable_1.isPresent(value);
 }
 exports.presence = presence;

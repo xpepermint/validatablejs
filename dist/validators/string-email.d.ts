@@ -1,4 +1,4 @@
-export declare function stringEmail(v: any, {allowDisplayName, allowUtf8LocalPart, requireTld}?: {
+export declare function stringEmail(value: any, {allowDisplayName, allowUtf8LocalPart, requireTld}?: {
     allowDisplayName?: boolean;
     allowUtf8LocalPart?: boolean;
     requireTld?: boolean;

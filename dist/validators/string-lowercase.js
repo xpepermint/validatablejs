@@ -1,13 +1,9 @@
 "use strict";
 const typeable_1 = require('typeable');
-/**
- * Validates that the specified field is lowercase.
- */
-function stringLowercase(v) {
-    if (!typeable_1.isString(v)) {
+function stringLowercase(value) {
+    if (!typeable_1.isString(value))
         return false;
-    }
-    return v === v.toLowerCase();
+    return value === value.toLowerCase();
 }
 exports.stringLowercase = stringLowercase;
 ;

@@ -1,9 +1,8 @@
 "use strict";
 const typeable_1 = require('typeable');
-function stringInclusion(v, d = {}) {
-    if (!typeable_1.isString(v)) {
+function stringInclusion(value, { seed } = {}) {
+    if (!typeable_1.isString(value))
         return false;
-    }
-    return v.indexOf(typeable_1.toString(d.seed)) >= 0;
+    return value.indexOf(typeable_1.toString(seed)) >= 0;
 }
 exports.stringInclusion = stringInclusion;

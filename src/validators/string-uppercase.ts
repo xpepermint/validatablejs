@@ -1,15 +1,7 @@
-import {
-  isString
-} from 'typeable';
+import {isString} from 'typeable';
 
-/**
- * Validates that the specified field is uppercase.
- */
+export function stringUppercase (value: any): boolean {
+  if (!isString(value)) return false;
 
-export function stringUppercase (v: any): boolean {
-  if (!isString(v)) {
-    return false;
-  }
-
-  return v === v.toUpperCase();
+  return value === value.toUpperCase();
 };

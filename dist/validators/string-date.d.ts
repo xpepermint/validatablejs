@@ -1,3 +1,3 @@
-export declare function stringDate(v: any, d?: {
+export declare function stringDate(value: any, {iso}?: {
     iso?: boolean;
 }): boolean;

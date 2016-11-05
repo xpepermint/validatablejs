@@ -1,3 +1,3 @@
-export declare function stringInclusion(v: any, d?: {
+export declare function stringInclusion(value: any, {seed}?: {
     seed?: any;
 }): boolean;

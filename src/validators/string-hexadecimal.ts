@@ -1,12 +1,7 @@
-import {
-  isString
-} from 'typeable';
+import {isString} from 'typeable';
 
-export function stringHexadecimal (v) {
-  if (isString(v)) {
-    return /^[0-9A-F]+$/i.test(v);
-  }
-  else {
-    return false;
-  }
+export function stringHexadecimal (value) {
+  if (!isString(value)) return false;
+  
+  return /^[0-9A-F]+$/i.test(value);
 }

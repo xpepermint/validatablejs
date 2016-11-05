@@ -1,5 +1,5 @@
 import {arrayInclusion} from './array-inclusion';
 
-export function arrayExclusion (v: any, d: {values?: any[]} = {}): boolean {
-  return !arrayInclusion(v, d);
+export function arrayExclusion (value: any, recipe: any): boolean {
+  return !arrayInclusion(value, recipe);
 }

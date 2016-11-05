@@ -1,18 +1,22 @@
 import {isNumber} from 'typeable';
 
-export function numberSize (v: any, d: {
+export function numberSize (value: any, {
+  min,
+  minOrEqual,
+  max,
+  maxOrEqual
+}: {
   min?: number, 
   minOrEqual?: number, 
   max?: number, 
   maxOrEqual?: number
 } = {}) {
-  let {min, minOrEqual, max, maxOrEqual} = d;
 
-  if (!isNumber(v)) return false;
+  if (!isNumber(value)) return false;
 
-  if (isNumber(min) && !(v > min)) return false;
-  if (isNumber(minOrEqual) && !(v >= minOrEqual)) return false;
-  if (isNumber(max) && !(v < max)) return false;
-  if (isNumber(maxOrEqual) && !(v <= maxOrEqual)) return false;
+  if (isNumber(min) && !(value > min)) return false;
+  if (isNumber(minOrEqual) && !(value >= minOrEqual)) return false;
+  if (isNumber(max) && !(value < max)) return false;
+  if (isNumber(maxOrEqual) && !(value <= maxOrEqual)) return false;
   return true;
 }

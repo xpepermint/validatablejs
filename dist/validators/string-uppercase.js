@@ -1,13 +1,9 @@
 "use strict";
 const typeable_1 = require('typeable');
-/**
- * Validates that the specified field is uppercase.
- */
-function stringUppercase(v) {
-    if (!typeable_1.isString(v)) {
+function stringUppercase(value) {
+    if (!typeable_1.isString(value))
         return false;
-    }
-    return v === v.toUpperCase();
+    return value === value.toUpperCase();
 }
 exports.stringUppercase = stringUppercase;
 ;

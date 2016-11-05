@@ -1,13 +1,8 @@
 "use strict";
 const typeable_1 = require('typeable');
-/**
-* Validates that the specified field is a hexadecimal color string.
-*/
-function stringHexColor(v) {
-    if (!typeable_1.isString(v)) {
+function stringHexColor(value) {
+    if (!typeable_1.isString(value))
         return false;
-    }
-    return /^#?([0-9A-F]{3}|[0-9A-F]{6})$/i.test(v);
+    return /^#?([0-9A-F]{3}|[0-9A-F]{6})$/i.test(value);
 }
 exports.stringHexColor = stringHexColor;
-;

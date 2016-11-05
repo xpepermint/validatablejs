@@ -1,18 +1,10 @@
-import {
-  isString
-} from 'typeable';
+import {isString} from 'typeable';
 
-/**
-* Validates the size of a number.
-*/
-
-export function stringJSON (v) {
-  if (!isString(v)) {
-    return false;
-  }
+export function stringJSON (value) {
+  if (!isString(value)) return false;
   
   try {
-    let obj = JSON.parse(v);
+    let obj = JSON.parse(value);
     return !!obj && typeof obj === 'object';
   } 
   catch (e) {}

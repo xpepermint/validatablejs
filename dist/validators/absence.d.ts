@@ -1,1 +1,1 @@
-export declare function absence(v: any): boolean;
+export declare function absence(value: any): boolean;

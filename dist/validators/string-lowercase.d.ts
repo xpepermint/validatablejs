@@ -1,4 +1,1 @@
-/**
- * Validates that the specified field is lowercase.
- */
-export declare function stringLowercase(v: any): boolean;
+export declare function stringLowercase(value: any): boolean;

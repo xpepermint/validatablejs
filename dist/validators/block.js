@@ -1,12 +1,10 @@
 "use strict";
-const typeable_1 = require('typeable');
-function block(v, d) {
-    let { block } = d;
-    if (typeable_1.isPromise(block)) {
-        return Promise.resolve(v).then(block.bind(this));
+function block(value, recipe) {
+    if (!recipe)
+        return false;
+    if (recipe.block) {
+        return recipe.block.call(this, { value, recipe });
     }
-    else {
-        return block.call(this, v, d);
-    }
+    return false;
 }
 exports.block = block;

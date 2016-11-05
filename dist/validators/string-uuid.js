@@ -5,26 +5,26 @@ const V2_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[2][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9
 const V3_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[3][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const V4_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[4][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const V5_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-function stringUUID(v, d = {}) {
-    if (!typeable_1.isString(v))
+function stringUUID(value, { version } = {}) {
+    if (!typeable_1.isString(value))
         return false;
-    switch (d.version) {
+    switch (version) {
         case 1:
-            return V1_REGEX.test(v);
+            return V1_REGEX.test(value);
         case 2:
-            return V2_REGEX.test(v);
+            return V2_REGEX.test(value);
         case 3:
-            return V3_REGEX.test(v);
+            return V3_REGEX.test(value);
         case 4:
-            return V4_REGEX.test(v);
+            return V4_REGEX.test(value);
         case 5:
-            return V5_REGEX.test(v);
+            return V5_REGEX.test(value);
     }
-    return (V1_REGEX.test(v)
-        || V2_REGEX.test(v)
-        || V3_REGEX.test(v)
-        || V4_REGEX.test(v)
-        || V5_REGEX.test(v));
+    return (V1_REGEX.test(value)
+        || V2_REGEX.test(value)
+        || V3_REGEX.test(value)
+        || V4_REGEX.test(value)
+        || V5_REGEX.test(value));
 }
 exports.stringUUID = stringUUID;
 ;

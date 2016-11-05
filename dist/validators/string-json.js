@@ -1,14 +1,10 @@
 "use strict";
 const typeable_1 = require('typeable');
-/**
-* Validates the size of a number.
-*/
-function stringJSON(v) {
-    if (!typeable_1.isString(v)) {
+function stringJSON(value) {
+    if (!typeable_1.isString(value))
         return false;
-    }
     try {
-        let obj = JSON.parse(v);
+        let obj = JSON.parse(value);
         return !!obj && typeof obj === 'object';
     }
     catch (e) { }

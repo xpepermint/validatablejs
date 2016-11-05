@@ -1,3 +1,1 @@
-export declare function arrayInclusion(v: any, d?: {
-    values?: any[];
-}): boolean;
+export declare function arrayInclusion(value: any, recipe?: any): boolean;

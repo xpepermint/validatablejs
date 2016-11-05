@@ -1,3 +1,3 @@
-export declare function stringUUID(v: any, d?: {
+export declare function stringUUID(value: any, {version}?: {
     version?: number;
 }): boolean;

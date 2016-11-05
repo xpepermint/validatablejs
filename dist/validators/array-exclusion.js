@@ -1,6 +1,6 @@
 "use strict";
 const array_inclusion_1 = require('./array-inclusion');
-function arrayExclusion(v, d = {}) {
-    return !array_inclusion_1.arrayInclusion(v, d);
+function arrayExclusion(value, recipe) {
+    return !array_inclusion_1.arrayInclusion(value, recipe);
 }
 exports.arrayExclusion = arrayExclusion;

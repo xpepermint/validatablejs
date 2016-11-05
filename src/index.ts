@@ -1,13 +1,19 @@
 import * as builtInValidators from './validators';
 
 /*
-* An interface which defines validator definition.
+* Definition of the validator block method.
 */
 
-export interface Validation {
+export type ValidatorBlock = (value: any, recipe: any) => boolean | Promise<boolean>;
+
+/*
+* Definition of the recipe object for a validator.
+*/
+
+export interface RecipeObject {
   name: string; // validator name
   message: string | (() => string);
-  [option: string]: any; // aditional properties
+  [key: string]: any; // aditional properties
 }
 
 /*
@@ -15,7 +21,7 @@ export interface Validation {
 */
 
 export class ValidationError extends Error {
-  public validation: Validation;
+  public recipe: RecipeObject;
   public value: any;
   public code: number;
 
@@ -23,19 +29,19 @@ export class ValidationError extends Error {
   * Class constructor.
   */
 
-  constructor (
-    validation: Validation, 
-    value: any,
+  public constructor (
+    recipe: RecipeObject,
+    value: any = null,
     code: number = 422
   ) {
-    let message = typeof validation.message === 'function'
-      ? validation.message()
-      : validation.message;
+    let message = typeof recipe.message === 'function'
+      ? recipe.message()
+      : recipe.message;
 
     super(message);
 
     this.name = this.constructor.name;
-    this.validation = Object.assign({}, validation, {message});
+    this.recipe = Object.assign({}, recipe, {message});
     this.value = value;
     this.code = code;
   }
@@ -48,18 +54,23 @@ export class ValidationError extends Error {
 export class Validator {
   public firstErrorOnly: boolean;
   public validationError: typeof ValidationError;
-  public validators: {[validator: string]: (value: any, options: any) => boolean | Promise<boolean>};
+  public validators: {[validator: string]: (value: any, validation: any) => boolean | Promise<boolean>};
   public context: any;
 
   /*
   * Class constructor.
   */
 
-  constructor ({
-    firstErrorOnly = false, 
-    validationError = ValidationError, 
-    validators = null, 
+  public constructor ({
+    firstErrorOnly = false,
+    validationError = ValidationError,
+    validators = {},
     context = null
+  }: {
+    firstErrorOnly?: boolean,
+    validationError?: typeof ValidationError,
+    validators?: {[name: string]: ValidatorBlock},
+    context?: any
   } = {}) {
     this.firstErrorOnly = firstErrorOnly;
     this.validationError = validationError;
@@ -72,23 +83,23 @@ export class Validator {
   */
 
   async validate (
-    value: any, 
-    validations: Validation[]
+    value: any,
+    recipes: RecipeObject[]
   ) {
     let errors = [];
 
-    for (let validation of validations) {
-      let {name} = validation;
+    for (let recipe of recipes) {
+      let {name} = recipe;
 
       let validator = this.validators[name];
       if (!validator) {
         throw new Error(`Unknown validator ${name}`);
       }
 
-      let isValid = await validator.call(this.context, value, validation);
+      let isValid = await validator.call(this.context, value, recipe);
       if (!isValid) {
         errors.push(
-          new this.validationError(validation, value)
+          new this.validationError(recipe, value)
         );
 
         if (this.firstErrorOnly) break;

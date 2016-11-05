@@ -1,4 +1,4 @@
-export declare function stringLength(v: any, {bytes, min, minOrEqual, max, maxOrEqual}?: {
+export declare function stringLength(value: any, {bytes, min, minOrEqual, max, maxOrEqual}?: {
     bytes?: boolean;
     min?: number;
     minOrEqual?: number;

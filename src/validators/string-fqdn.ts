@@ -1,6 +1,6 @@
 import {isString} from 'typeable';
 
-export function stringFQDN (v, {
+export function stringFQDN (value, {
 	requireTld = true, 
 	allowUnderscores = false, 
 	allowTrailingDot = false
@@ -9,13 +9,14 @@ export function stringFQDN (v, {
 	allowUnderscores?: boolean,
 	allowTrailingDot?: boolean
 } = {}): boolean {
-  if (!isString(v)) return false;
 
-	if (allowTrailingDot && v[v.length - 1] === '.') {
-		v = v.substring(0, v.length - 1);
+  if (!isString(value)) return false;
+
+	if (allowTrailingDot && value[value.length - 1] === '.') {
+		value = value.substring(0, value.length - 1);
 	}
 
-  let parts = v.split('.');
+  let parts = value.split('.');
 
 	if (requireTld) {
 		let tld = parts.pop();

@@ -3,7 +3,7 @@ import {
   isNumber
 } from 'typeable';
 
-export function stringLength (v: any, {
+export function stringLength (value: any, {
   bytes = false,
   min, 
   minOrEqual, 
@@ -16,13 +16,11 @@ export function stringLength (v: any, {
   max?: number, 
   maxOrEqual?: number
 } = {}) {
-  if (!isString(v)) {
-    return false;
-  }
+  if (!isString(value)) return false;
 
   let len = bytes
-    ? encodeURI(v).split(/%..|./).length - 1
-    : v.length;
+    ? encodeURI(value).split(/%..|./).length - 1
+    : value.length;
 
   if (isNumber(min) && !(len > min)) return false;
   if (isNumber(minOrEqual) && !(len >= minOrEqual)) return false;

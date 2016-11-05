@@ -1,3 +1,1 @@
-export declare function arrayExclusion(v: any, d?: {
-    values?: any[];
-}): boolean;
+export declare function arrayExclusion(value: any, recipe: any): boolean;

@@ -1,3 +1,1 @@
-export declare function stringExclusion(v: any, d?: {
-    seed?: any;
-}): boolean;
+export declare function stringExclusion(value: any, recipe: any): boolean;

@@ -1,6 +1,6 @@
 "use strict";
 const typeable_1 = require('typeable');
-function absence(v) {
-    return typeable_1.isAbsent(v);
+function absence(value) {
+    return typeable_1.isAbsent(value);
 }
 exports.absence = absence;

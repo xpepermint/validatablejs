@@ -1,16 +1,15 @@
 "use strict";
 const typeable_1 = require('typeable');
-function numberSize(v, d = {}) {
-    let { min, minOrEqual, max, maxOrEqual } = d;
-    if (!typeable_1.isNumber(v))
+function numberSize(value, { min, minOrEqual, max, maxOrEqual } = {}) {
+    if (!typeable_1.isNumber(value))
         return false;
-    if (typeable_1.isNumber(min) && !(v > min))
+    if (typeable_1.isNumber(min) && !(value > min))
         return false;
-    if (typeable_1.isNumber(minOrEqual) && !(v >= minOrEqual))
+    if (typeable_1.isNumber(minOrEqual) && !(value >= minOrEqual))
         return false;
-    if (typeable_1.isNumber(max) && !(v < max))
+    if (typeable_1.isNumber(max) && !(value < max))
         return false;
-    if (typeable_1.isNumber(maxOrEqual) && !(v <= maxOrEqual))
+    if (typeable_1.isNumber(maxOrEqual) && !(value <= maxOrEqual))
         return false;
     return true;
 }

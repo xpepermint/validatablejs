@@ -1,1 +1,1 @@
-export declare function presence(v: any): boolean;
+export declare function presence(value: any): boolean;

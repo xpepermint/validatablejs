@@ -1,1 +1,1 @@
-export declare function stringHexadecimal(v: any): boolean;
+export declare function stringHexadecimal(value: any): boolean;

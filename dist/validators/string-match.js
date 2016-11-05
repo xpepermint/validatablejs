@@ -1,13 +1,9 @@
 "use strict";
 const typeable_1 = require('typeable');
-/**
- * Validates that the specified field matches the pattern.
- */
-function stringMatch(v, d) {
-    if (!typeable_1.isString(v)) {
+function stringMatch(value, { regexp } = {}) {
+    if (!typeable_1.isString(value))
         return false;
-    }
-    return d.regexp.test(v);
+    return regexp.test(value);
 }
 exports.stringMatch = stringMatch;
 ;

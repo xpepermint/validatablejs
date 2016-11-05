@@ -1,5 +1,5 @@
 import {isAbsent} from 'typeable';
 
-export function absence (v: any): boolean {
-  return isAbsent(v);
+export function absence (value: any): boolean {
+  return isAbsent(value);
 }
