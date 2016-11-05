@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringHexadecimal} = require('../../dist/validators');
+import test from 'ava';
+import {stringHexadecimal} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringHexadecimal(true), false);

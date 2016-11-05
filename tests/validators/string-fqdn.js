@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringFQDN} = require('../../dist/validators');
+import test from 'ava';
+import {stringFQDN} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringFQDN(true), false);

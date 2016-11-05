@@ -1,5 +1,5 @@
-const test = require('ava');
-const {numberSize} = require('../../dist/validators');
+import test from 'ava';
+import {numberSize} from '../../dist/validators';
 
 test('fails when not a number', (t) => {
   t.is(numberSize(true), false);

@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringHexColor} = require('../../dist/validators');
+import test from 'ava';
+import {stringHexColor} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringHexColor(true), false);

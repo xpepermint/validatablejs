@@ -1,5 +1,5 @@
-const test = require('ava');
-const {presence} = require('../../dist/validators');
+import test from 'ava';
+import {presence} from '../../dist/validators';
 
 test('fails when null', (t) => {
   t.is(presence(null), false);

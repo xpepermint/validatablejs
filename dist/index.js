@@ -1,74 +1,68 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Validator = undefined;
-exports.defaultErrorBuilder = defaultErrorBuilder;
-
-var _validators = require('./validators');
-
-var defaultValidators = _interopRequireWildcard(_validators);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
-
-function defaultErrorBuilder(name, value, definition) {
-  let message = definition.message;
-
-  let isString = typeof message === 'string';
-  return isString ? message : message.call(this, value, definition);
+"use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
+const typeable_1 = require('typeable');
+const builtInValidators = require('./validators');
+/*
+* A validation error class.
+*/
+class ValidationError extends Error {
+    /*
+    * Class constructor.
+    */
+    constructor(validation, value, code = 422) {
+        super();
+        this.name = this.constructor.name;
+        this.value = value;
+        this.code = code;
+        this.validation = Object.assign({}, validation);
+        if (typeable_1.isFunction(this.validation.message)) {
+            this.validation.message = this.validation.message();
+        }
+        this.message = this.validation.message;
+    }
 }
-
+exports.ValidationError = ValidationError;
+/*
+* A core validation class.
+*/
 class Validator {
-
-  constructor() {
-    var _ref = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
-
-    var _ref$firstErrorOnly = _ref.firstErrorOnly;
-    let firstErrorOnly = _ref$firstErrorOnly === undefined ? false : _ref$firstErrorOnly;
-    var _ref$errorBuilder = _ref.errorBuilder;
-    let errorBuilder = _ref$errorBuilder === undefined ? defaultErrorBuilder : _ref$errorBuilder;
-    var _ref$validators = _ref.validators;
-    let validators = _ref$validators === undefined ? {} : _ref$validators;
-    var _ref$context = _ref.context;
-    let context = _ref$context === undefined ? null : _ref$context;
-
-    this.firstErrorOnly = firstErrorOnly;
-    this.errorBuilder = errorBuilder;
-    this.validators = Object.assign(validators, defaultValidators);
-    this.context = context;
-  }
-
-  validate(value) {
-    var _arguments = arguments,
-        _this = this;
-
-    return _asyncToGenerator(function* () {
-      let definitions = _arguments.length <= 1 || _arguments[1] === undefined ? {} : _arguments[1];
-
-      let errors = [];
-
-      for (let name in definitions) {
-        let definition = definitions[name];
-
-        let validator = _this.validators[name];
-        if (!validator) {
-          throw new Error(`Unknown validator ${ name }`);
-        }
-
-        let isValid = yield validator.call(_this.context, value, definition);
-        if (!isValid) {
-          let error = yield _this.errorBuilder.call(_this.context, name, value, definition);
-          errors.push(error);
-
-          if (_this.firstErrorOnly) break;
-        }
-      }
-
-      return errors;
-    })();
-  }
+    /*
+    * Class constructor.
+    */
+    constructor({ firstErrorOnly = false, validationError = ValidationError, validators = null, context = null } = {}) {
+        this.firstErrorOnly = firstErrorOnly;
+        this.validationError = validationError;
+        this.validators = Object.assign({}, builtInValidators, validators);
+        this.context = context;
+    }
+    /*
+    * Validates the `value` against the `validations`.
+    */
+    validate(value, validations) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let errors = [];
+            for (let validation of validations) {
+                let { name } = validation;
+                let validator = this.validators[name];
+                if (!validator) {
+                    throw new Error(`Unknown validator ${name}`);
+                }
+                let isValid = yield validator.call(this.context, value, validation);
+                if (!isValid) {
+                    errors.push(new this.validationError(validation, value));
+                    if (this.firstErrorOnly)
+                        break;
+                }
+            }
+            return errors;
+        });
+    }
 }
 exports.Validator = Validator;

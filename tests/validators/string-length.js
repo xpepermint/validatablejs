@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringLength} = require('../../dist/validators');
+import test from 'ava';
+import {stringLength} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringLength(true), false);
@@ -15,4 +15,9 @@ test('fails when too long', (t) => {
 
 test('passes without options', (t) => {
   t.is(stringLength('hello'), true);
+});
+
+test('supports bytes length', (t) => {
+  t.is(stringLength('ašč', {bytes: true, max: 3}), false);
+  t.is(stringLength('ašč', {bytes: true, max: 6}), true);
 });

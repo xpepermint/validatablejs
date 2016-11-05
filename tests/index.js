@@ -1,74 +1,44 @@
-const test = require('ava');
-const {Validator} = require('../dist/index');
+import test from 'ava';
+import {Validator, ValidationError} from '../dist/index';
 
 test('Validator.validate', async (t) => {
-  let v = new Validator();
-  let result = await v.validate(
-    '',
-    {
-      presence: {
-        message: 'is required'
-      },
-      blockValue: {
-        block: async (v) => v === 'foo',
-        message: 'must be foo'
-      }
-    }
-  );
+  let v = new Validator({
+    context: {who: 'foo'}
+  });
+  let validations = [
+    {name: 'presence', message: 'is required'},
+    {name: 'block', message: 'must be foo', async block (v) { return v === this.who}}
+  ];
+  let errors = await v.validate('', validations);
 
-  t.deepEqual(result, ['is required','must be foo']);
+  t.is(errors.length, 2);
+  t.is(errors[0] instanceof ValidationError, true);
+  t.is(errors[0].name, 'ValidationError');
+  t.is(errors[0].message, 'is required');
+  t.deepEqual(errors[0].validation, validations[0]);
+  t.deepEqual(errors[1].validation, validations[1]);
+  t.is(errors[0].code, 422);
 });
 
 test('Validator.validate with onlyFirstError=true', async (t) => {
   let v = new Validator({
     firstErrorOnly: true
   });
-  let result = await v.validate(
-    '',
-    {
-      presence: {
-        message: 'is required'
-      },
-      blockValue: {
-        block: async (v) => v === 'foo',
-        message: 'must be foo'
-      }
-    }
-  );
+  let validations = [
+    {name: 'presence', message: 'is required'},
+    {name: 'block', message: 'must be foo', async block (v) { return v === this.who}}
+  ];
+  let errors = await v.validate('', validations);
 
-  t.deepEqual(result, ['is required']);
-});
-
-test('Validator.validate with custom errorBuilder', async (t) => {
-  let v = new Validator({
-    errorBuilder: (name, value, {message}) => ({message})
-  });
-  let result = await v.validate(
-    '',
-    {
-      presence: {
-        message: 'is required'
-      },
-      blockValue: {
-        block: async (v) => v === 'foo',
-        message: 'must be foo'
-      }
-    }
-  );
-
-  t.deepEqual(result, [{message: 'is required'}, {message: 'must be foo'}]);
+  t.is(errors.length, 1);
 });
 
 test('Validator.validate with validator message as function', async (t) => {
   let v = new Validator();
-  let result = await v.validate(
-    '',
-    {
-      presence: {
-        message: (v, d) => 'is required'
-      }
-    }
-  );
+  let validations = [
+    {name: 'presence', message: () => 'is required'}
+  ];
+  let errors = await v.validate('', validations);
 
-  t.deepEqual(result, ['is required']);
+  t.deepEqual(errors[0].message, 'is required');
 });

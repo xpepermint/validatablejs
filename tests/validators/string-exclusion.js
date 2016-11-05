@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringExclusion} = require('../../dist/validators');
+import test from 'ava';
+import {stringExclusion} from '../../dist/validators';
 
 test('fails when a string', (t) => {
   t.is(stringExclusion(true, {seed: 'true'}), true);

@@ -2,7 +2,9 @@
 
 # validatable.js
 
-> A library for synchronous and asynchronous validation.
+> A library for synchronous and asynchronous input validation.
+
+This is a light weight open source package, written with [TypeScript](https://www.typescriptlang.org), for use on **server or in browser**. The source code is available on [GitHub](https://github.com/xpepermint/validatablejs) where you can also find our [issue tracker](https://github.com/xpepermint/validatablejs/issues).
 
 ## Related Projects
 
@@ -13,6 +15,8 @@
 
 ## Install
 
+Run the command below to install the package.
+
 ```
 $ npm install --save validatable
 ```
@@ -22,49 +26,74 @@ $ npm install --save validatable
 ```js
 import {Validator} from 'validatable';
 
-let v = new Validator({
-  firstErrorOnly: true,
-  errorBuilder: async (name, value, {message}) => ({name, message}), // for custom error messages
-  validators: { // custom validators (will be merged with built-in validators; existing validators can be overridden)
-    coolness: async (value, definition) => value === 'cool'
-  },
-  context: null // context is applied to each validator
-});
+let v = new Validator();
 
-let errors = await v.validate(
-  'John Smith',
-  {
-    presence: { // built-in validator name
-      message: 'must be present' // error message (can be a function)
-    },
-    coolness: { // custom validator name
-      message: 'must be cool' // error message (can be a function)
+let e = await v.validate(
+  'John Smith', // value to validate
+  [ // list of validations
+    {
+      name: 'isPresent', // validator name
+      message: 'must be present' // validator options
     }
-  }
-); // -> [{name: 'presence', message: 'must be present'}]
+  ]
+); // -> list of ValidatorError instances
 ```
 
 ## API
 
-**Validator(options)**
+**ValidationError(validation, value, code)**
+
+> Validation error class which holds information about the invalid value.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| validation | Object | Yes | - | Validator definition.
+| value | Any | Yes | - | The value which failed to pass the validation.
+| code | Integer | No | 422 | Error status code.
+
+**Validator({firstErrorOnly, validationError, validators, context})**
 
 > A core validation class.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| firstErrorOnly | Boolean | No | false | When set to `true`, only the first error is returned otherwise all validation errors are returned.
-| errorBuilder | Function/Promise | No | (name, value, {message}) => message | A method for constructing a custom validation error message.
+| firstErrorOnly | Boolean | No | false | When set to `true`, the validation stops after the first validation error.
+| validationError | ValidationError | No | ValidationError | A custom ValidationError class.
 | validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
-| context | Object | No | null | A custom context reference which is applied to each validator method.
+| context | Object | No | null | A context reference which is applied to each validator method.
 
-**Validator.prototype.validate(value, definitions):Boolean;**
+```js
+import {Validator, ValidationError} from 'validatable';
+
+let v = new Validator({
+  firstErrorOnly: true,
+  error: ValidationError,
+  validators: {
+    async coolness (value, validation) { return value === 'cool' } // custom validator
+  },
+  context: null
+});
+```
+
+**Validator.prototype.validate(value, validations): Promise<Boolean>**
 
 > Validates a value against the provided options.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | value | Any | Yes | - | A value to validate.
-| definitions | Object | Yes | - | A configuration object describing validations.
+| validations | Array | Yes | - | A list of validation objects.
+
+```js
+let value = 'John Smith';
+let validations = [
+  {
+    name: 'isPresent', // validator name
+    message: 'must be present' // validation error message
+  }
+];
+await v.validate(value, validations);
+```
 
 ### Built-in Validators
 
@@ -88,17 +117,17 @@ let errors = await v.validate(
 |--------|------|----------|---------|------------
 | values | Array | Yes | - | Array of allowed values.
 
-#### blockValue
+#### block
 
 > Validates the specified field against the provided block function. If the function returns true then the field is treated as valid.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| block | Function | Yes | - | Synchronous or asynchronous function (e.g. `async () => true`)
+| block | Function,Promise | Yes | - | Synchronous or asynchronous function (e.g. `async () => true`)
 
 ```js
 let definition = {
-  block: async (value, definition) => true,
+  async block (value, options) { return true },
   message: 'must be present'
 };
 ```
@@ -126,17 +155,13 @@ let definition = {
 
 > Validates that the specified field is base64 encoded string.
 
-#### stringCreditCard
-
-> Validates that the specified field is a credit card number.
-
 #### stringDate
 
 > Validates that the specified field is a date string.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|----------|-----------
-| format | String | No | - | Date format (possible value is `iso8601`).
+| iso | Boolean | No | false | When `true` only ISO-8601 date format is accepted.
 
 #### stringEmail
 
@@ -182,26 +207,6 @@ let definition = {
 |--------|------|----------|---------|------------
 | seed | String | Yes | - | The seed which should exist in the string.
 
-#### stringIP
-
-> Validates that the specified field is an IP.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| version | Integer | No | - | IP version (4 or 6).
-
-#### stringISBN
-
-> Validates that the specified field is an [International Standard Book Number](https://en.wikipedia.org/wiki/International_Standard_Book_Number).
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| version | Integer | No | - | IP version (10 or 13).
-
-#### stringISIN
-
-> Validates that the specified field is an [International Securities Identification](https://en.wikipedia.org/wiki/International_Securities_Identification_Number).
-
 #### stringJSON
 
 > Validates that the specified field is a stringified JSON string.
@@ -212,16 +217,15 @@ let definition = {
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| min | Number | No | 0 | Minimum number of characters.
-| max | Number | No | - | Maximum number of characters.
+| bytes | Boolean | No | false | When `true` the number of bytes is returned.
+| min | Number | No | - | Allowed minimum number of characters.
+| minOrEqual | Number | No | - | Allowed minimum value number of characters (allowing equal).
+| max | Number | No | - | Allowed maximum number of characters.
+| maxOrEqual | Number | No | - | Allowed maximum number of characters (allowing equal).
 
 #### stringLowercase
 
 > Validates that the specified field is lowercase.
-
-#### stringMACAddress
-
-> Validates that the specified field is a MAC address.
 
 #### stringMatch
 
@@ -236,27 +240,13 @@ let definition = {
 
 > Validates that the specified field is uppercase.
 
-#### stringURL
-
-> Validates that the specified field is an URL.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| protocols | Array | No | ['http', 'https', 'ftp'] | List of known protocols (e.g. http, https, ftp).
-| requireTld | Boolean | No | true | Require top-level domain name.
-| requireProtocol | Boolean | No | true | Require URL protocol.
-| requireValidProtocol | Boolean | No | true | Require a valid protocol.
-| allowUnderscores | Boolean | No | false | Allow using underscores.
-| allowTrailingDot | Boolean | No | false | Allow trailing dot.
-| allowProtocolRelativeUrls | Boolean | No | false | Allow protocol relative urls (e.g. //foobar.com)
-
 #### stringUUID
 
 > Validates that the specified field is a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| version | Integer | No | - | UUID version (3, 4 or 5).
+| version | Integer | No | - | UUID version (1, 2, 3, 4 or 5).
 
 ## License (MIT)
 

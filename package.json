@@ -1,8 +1,9 @@
 {
   "name": "validatable",
-  "version": "0.5.4",
-  "description": "A library for synchronous and asynchronous validation.",
+  "version": "0.6.0",
+  "description": "A library for synchronous and asynchronous input validation.",
   "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "ava": {
     "files": [
       "./tests/*.js",
@@ -13,11 +14,9 @@
   },
   "scripts": {
     "clean": "rm -Rf ./dist",
-    "prebuild": "npm run clean; mkdir -p ./dist",
-    "build": "babel ./src --out-dir ./dist --copy-files",
-    "pretest": "npm run build",
-    "test": "ava",
-    "prepublish": "npm run build"
+    "build": "tsc",
+    "prepublish": "npm run clean; npm run build",
+    "test": "npm run clean; npm run build; ava"
   },
   "repository": {
     "type": "git",
@@ -42,11 +41,9 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "0.16.x",
-    "babel-cli": "6.18.x",
-    "babel-preset-node5": "11.1.x"
+    "typescript": "2.0.7"
   },
   "dependencies": {
-    "typeable": "0.7.x",
-    "validator": "6.1.x"
+    "typeable": "0.8.2"
   }
 }

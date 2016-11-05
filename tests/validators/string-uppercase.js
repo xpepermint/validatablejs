@@ -1,5 +1,5 @@
-const test = require('ava');
-const {stringUppercase} = require('../../dist/validators');
+import test from 'ava';
+import {stringUppercase} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringUppercase(true), false);

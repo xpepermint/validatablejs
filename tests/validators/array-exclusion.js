@@ -1,5 +1,5 @@
-const test = require('ava');
-const {arrayExclusion} = require('../../dist/validators');
+import test from 'ava';
+import {arrayExclusion} from '../../dist/validators';
 
 test('fails when included in the list', (t) => {
   t.is(arrayExclusion(true, {values: [false]}), true);

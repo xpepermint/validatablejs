@@ -1,5 +1,5 @@
-const test = require('ava');
-const {BSONObjectID} = require('../../dist/validators');
+import test from 'ava';
+import {BSONObjectID} from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(BSONObjectID(true), false);
