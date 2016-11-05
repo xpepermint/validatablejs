@@ -1,6 +1,6 @@
 export interface Validation {
     name: string;
-    message: any;
+    message: string | (() => string);
     [option: string]: any;
 }
 export declare class ValidationError extends Error {

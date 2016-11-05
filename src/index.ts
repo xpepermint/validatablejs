@@ -1,4 +1,3 @@
-import {isString, isFunction} from 'typeable';
 import * as builtInValidators from './validators';
 
 /*
@@ -7,7 +6,7 @@ import * as builtInValidators from './validators';
 
 export interface Validation {
   name: string; // validator name
-  message: any;
+  message: string | (() => string);
   [option: string]: any; // aditional properties
 }
 
@@ -29,17 +28,16 @@ export class ValidationError extends Error {
     value: any,
     code: number = 422
   ) {
-    super();
+    let message = typeof validation.message === 'function'
+      ? validation.message()
+      : validation.message;
+
+    super(message);
 
     this.name = this.constructor.name;
+    this.validation = Object.assign({}, validation, {message});
     this.value = value;
     this.code = code;
-
-    this.validation = Object.assign({}, validation);
-    if (isFunction(this.validation.message)) {
-      this.validation.message = this.validation.message();
-    }
-    this.message = this.validation.message;
   }
 }
 

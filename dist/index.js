@@ -7,7 +7,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-const typeable_1 = require('typeable');
 const builtInValidators = require('./validators');
 /*
 * A validation error class.
@@ -17,15 +16,14 @@ class ValidationError extends Error {
     * Class constructor.
     */
     constructor(validation, value, code = 422) {
-        super();
+        let message = typeof validation.message === 'function'
+            ? validation.message()
+            : validation.message;
+        super(message);
         this.name = this.constructor.name;
+        this.validation = Object.assign({}, validation, { message });
         this.value = value;
         this.code = code;
-        this.validation = Object.assign({}, validation);
-        if (typeable_1.isFunction(this.validation.message)) {
-            this.validation.message = this.validation.message();
-        }
-        this.message = this.validation.message;
     }
 }
 exports.ValidationError = ValidationError;
