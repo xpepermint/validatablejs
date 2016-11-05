@@ -43,16 +43,6 @@ See the `./tests` folder for details.
 
 ## API
 
-**ValidatorError(recipe, value, code)**
-
-> Validation error class which holds information about the invalid value.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| recipe | Object | Yes | - | Validator recipe object.
-| value | Any | Yes | - | The value which failed to pass the validation.
-| code | Integer | No | 422 | Error status code.
-
 **Validator({firstErrorOnly, validators, context})**
 
 > A core validation class.
@@ -103,6 +93,16 @@ let recipes = [
 ];
 await v.validate(value, recipes);
 ```
+
+**ValidatorError(recipe, value, code)**
+
+> Validation error class which holds information about the invalid value.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| recipe | Object | Yes | - | Validator recipe object.
+| value | Any | Yes | - | The value which failed to pass the validation.
+| code | Integer | No | 422 | Error status code.
 
 ### Built-in Validators
 
