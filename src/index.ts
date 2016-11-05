@@ -84,7 +84,7 @@ export class Validator {
 
   async validate (
     value: any,
-    recipes: RecipeObject[]
+    recipes: RecipeObject[] = []
   ) {
     let errors = [];
 

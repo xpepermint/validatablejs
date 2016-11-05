@@ -43,7 +43,7 @@ class Validator {
     /*
     * Validates the `value` against the `validations`.
     */
-    validate(value, recipes) {
+    validate(value, recipes = []) {
         return __awaiter(this, void 0, void 0, function* () {
             let errors = [];
             for (let recipe of recipes) {

@@ -25,5 +25,5 @@ export declare class Validator {
         };
         context?: any;
     });
-    validate(value: any, recipes: RecipeObject[]): Promise<any[]>;
+    validate(value: any, recipes?: RecipeObject[]): Promise<any[]>;
 }
