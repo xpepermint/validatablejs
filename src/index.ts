@@ -21,8 +21,8 @@ export interface RecipeObject {
 */
 
 export class ValidationError extends Error {
-  public recipe: RecipeObject;
   public value: any;
+  public recipe: RecipeObject;
   public code: number;
 
   /*
@@ -30,19 +30,19 @@ export class ValidationError extends Error {
   */
 
   public constructor (
-    recipe: RecipeObject,
     value: any = null,
+    recipe: RecipeObject = null,
     code: number = 422
   ) {
-    let message = typeof recipe.message === 'function'
+    super();
+
+    this.message = typeof recipe.message === 'function'
       ? recipe.message()
       : recipe.message;
 
-    super(message);
-
     this.name = this.constructor.name;
-    this.recipe = Object.assign({}, recipe, {message});
     this.value = value;
+    this.recipe = Object.assign({}, recipe, {message: this.message});
     this.code = code;
   }
 }
@@ -53,7 +53,6 @@ export class ValidationError extends Error {
 
 export class Validator {
   public firstErrorOnly: boolean;
-  public validationError: typeof ValidationError;
   public validators: {[validator: string]: (value: any, validation: any) => boolean | Promise<boolean>};
   public context: any;
 
@@ -63,26 +62,31 @@ export class Validator {
 
   public constructor ({
     firstErrorOnly = false,
-    validationError = ValidationError,
     validators = {},
     context = null
   }: {
     firstErrorOnly?: boolean,
-    validationError?: typeof ValidationError,
     validators?: {[name: string]: ValidatorBlock},
     context?: any
   } = {}) {
     this.firstErrorOnly = firstErrorOnly;
-    this.validationError = validationError;
     this.validators = Object.assign({}, builtInValidators, validators);
     this.context = context;
+  }
+
+  /*
+  * Returns a new instance of validation error.
+  */
+
+  public createValidationError (value: any, recipe: RecipeObject): ValidationError {
+    return new ValidationError(value, recipe);
   }
 
   /*
   * Validates the `value` against the `validations`.
   */
 
-  async validate (
+  public async validate (
     value: any,
     recipes: RecipeObject[] = []
   ) {
@@ -99,7 +103,7 @@ export class Validator {
       let isValid = await validator.call(this.context, value, recipe);
       if (!isValid) {
         errors.push(
-          new this.validationError(recipe, value)
+          this.createValidationError(value, recipe)
         );
 
         if (this.firstErrorOnly) break;

@@ -15,14 +15,14 @@ class ValidationError extends Error {
     /*
     * Class constructor.
     */
-    constructor(recipe, value = null, code = 422) {
-        let message = typeof recipe.message === 'function'
+    constructor(value = null, recipe = null, code = 422) {
+        super();
+        this.message = typeof recipe.message === 'function'
             ? recipe.message()
             : recipe.message;
-        super(message);
         this.name = this.constructor.name;
-        this.recipe = Object.assign({}, recipe, { message });
         this.value = value;
+        this.recipe = Object.assign({}, recipe, { message: this.message });
         this.code = code;
     }
 }
@@ -34,11 +34,16 @@ class Validator {
     /*
     * Class constructor.
     */
-    constructor({ firstErrorOnly = false, validationError = ValidationError, validators = {}, context = null } = {}) {
+    constructor({ firstErrorOnly = false, validators = {}, context = null } = {}) {
         this.firstErrorOnly = firstErrorOnly;
-        this.validationError = validationError;
         this.validators = Object.assign({}, builtInValidators, validators);
         this.context = context;
+    }
+    /*
+    * Returns a new instance of validation error.
+    */
+    createValidationError(value, recipe) {
+        return new ValidationError(value, recipe);
     }
     /*
     * Validates the `value` against the `validations`.
@@ -54,7 +59,7 @@ class Validator {
                 }
                 let isValid = yield validator.call(this.context, value, recipe);
                 if (!isValid) {
-                    errors.push(new this.validationError(recipe, value));
+                    errors.push(this.createValidationError(value, recipe));
                     if (this.firstErrorOnly)
                         break;
                 }

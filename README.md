@@ -53,23 +53,21 @@ See the `./tests` folder for details.
 | value | Any | Yes | - | The value which failed to pass the validation.
 | code | Integer | No | 422 | Error status code.
 
-**Validator({firstErrorOnly, validationError, validators, context})**
+**Validator({firstErrorOnly, validators, context})**
 
 > A core validation class.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | firstErrorOnly | Boolean | No | false | When set to `true`, the validation stops after the first validation error.
-| validationError | ValidationError | No | ValidationError | A custom ValidationError class.
 | validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
 | context | Object | No | null | A context reference which is applied to each validator method.
 
 ```js
-import {Validator, ValidationError} from 'validatable';
+import {Validator} from 'validatable';
 
 let v = new Validator({
   firstErrorOnly: true,
-  validationError: ValidationError,
   validators: {
     async coolness ({value, recipe}}) { return value === 'cool' } // custom validator
   },
@@ -77,7 +75,16 @@ let v = new Validator({
 });
 ```
 
-**Validator.prototype.validate(value, recipes): Promise<Boolean>**
+**Validator.prototype.createValidationError(value, recipe)**: ValidationError
+
+> Validates a value against the provided options.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| value | Any | Yes | - | A value to validate.
+| recipe | Object | No | null | A configuration object describing a validator.
+
+**Validator.prototype.validate(value, recipes)**: Promise<Boolean>
 
 > Validates a value against the provided options.
 
