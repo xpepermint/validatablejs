@@ -1,6 +1,6 @@
 {
   "name": "validatable",
-  "version": "0.7.1",
+  "version": "0.7.2",
   "description": "A library for synchronous and asynchronous input validation.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -44,6 +44,6 @@
     "typescript": "2.0.x"
   },
   "dependencies": {
-    "typeable": "0.8.x"
+    "typeable": "0.9.x"
   }
 }
