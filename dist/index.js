@@ -15,7 +15,7 @@ class ValidatorError extends Error {
     /*
     * Class constructor.
     */
-    constructor(validator = null, message = null, code = 422) {
+    constructor(validator, message = null, code = 422) {
         super(message);
         this.name = this.constructor.name; // class name
         this.validator = validator; // validator name

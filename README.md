@@ -93,7 +93,7 @@ await v.validate(value, recipes);
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
 | validator | String | Yes | - | Validator name.
-| message | String | Yes | - | Validation error message.
+| message | String | No | null | Validation error message.
 | code | Integer | No | 422 | Error status code.
 
 ### Built-in Validators

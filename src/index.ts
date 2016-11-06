@@ -30,7 +30,7 @@ export class ValidatorError extends Error {
   */
 
   public constructor (
-    validator: string = null,
+    validator: string,
     message: string = null,
     code: number = 422
   ) {
