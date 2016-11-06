@@ -1,5 +1,8 @@
 import test from 'ava';
-import {Validator, ValidatorError} from '../dist/index';
+import {
+  Validator,
+  ValidatorError
+} from '../dist/index';
 
 test('Validator.validate should return a list of ValidatorError instances', async (t) => {
   let v = new Validator({
