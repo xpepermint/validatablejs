@@ -9,6 +9,12 @@ export declare class ValidatorError extends Error {
     message: string;
     code: number;
     constructor(validator: string, message?: string, code?: number);
+    toObject(): {
+        name: string;
+        message: string;
+        validator: string;
+        code: number;
+    };
 }
 export declare class Validator {
     firstErrorOnly: boolean;

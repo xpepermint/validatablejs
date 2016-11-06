@@ -36,10 +36,31 @@ export class ValidatorError extends Error {
   ) {
     super(message);
 
-    this.name = this.constructor.name; // class name
-    this.validator = validator; // validator name
-    this.message = message; // validation error message
-    this.code = code; // error code
+    Object.defineProperty(this, 'name', { // class name
+      value: this.constructor.name,
+      writable: true
+    });
+    Object.defineProperty(this, 'message', { // validation error message
+      value: message,
+      writable: true
+    });
+    Object.defineProperty(this, 'validator', { // validator name
+      value: validator,
+      writable: true
+    });
+    Object.defineProperty(this, 'code', { // error code
+      value: code,
+      writable: true
+    });
+  }
+
+  /*
+  * Returns error data.
+  */
+
+  toObject () {
+    let {name, message, validator, code} = this;
+    return {name, message, validator, code};
   }
 }
 

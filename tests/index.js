@@ -19,6 +19,21 @@ test('Validator.validate should return a list of ValidatorError instances', asyn
   t.is(errors[0].code, 422);
 });
 
+test('ValidatorError should not expose properties', async (t) => {
+  let e = new ValidatorError();
+  t.deepEqual(Object.keys(e), []);
+});
+
+test('ValidatorError.toObject should return error data', async (t) => {
+  let e = new ValidatorError('foo', 'bar');
+  t.deepEqual(e.toObject(), {
+    name: 'ValidatorError', 
+    message: 'bar',
+    validator: 'foo',
+    code: 422
+  });
+});
+
 test('Validator.validate with onlyFirstError=true should return only one error', async (t) => {
   let v = new Validator({
     firstErrorOnly: true
