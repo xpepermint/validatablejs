@@ -8,7 +8,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const builtInValidators = require('./validators');
-const typeable_1 = require('typeable');
 /*
 * A validation error class.
 */
@@ -17,7 +16,7 @@ class ValidatorError extends Error {
     * Class constructor.
     */
     constructor(validator = null, message = null, code = 422) {
-        super();
+        super(message);
         this.name = this.constructor.name; // class name
         this.validator = validator; // validator name
         this.message = message; // validation error message
@@ -40,7 +39,7 @@ class Validator {
     /*
     * Returns a new instance of ValidatorError instance.
     */
-    _createValidatorError(value, recipe) {
+    _createValidatorError(recipe) {
         let message = typeof recipe.message === 'function'
             ? recipe.message()
             : recipe.message;
@@ -52,8 +51,7 @@ class Validator {
     */
     _createString(template, data) {
         for (let key in data) {
-            let value = typeable_1.toString(data[key]);
-            template = template.replace(`%{${key}}`, value);
+            template = template.replace(`%{${key}}`, data[key]);
         }
         return template;
     }
@@ -71,7 +69,7 @@ class Validator {
                 }
                 let isValid = yield validator.call(this.context, value, recipe);
                 if (!isValid) {
-                    errors.push(this._createValidatorError(value, recipe));
+                    errors.push(this._createValidatorError(recipe));
                     if (this.firstErrorOnly)
                         break;
                 }

@@ -1,5 +1,4 @@
 import * as builtInValidators from './validators';
-import {toString} from 'typeable';
 
 /*
 * Definition of the validator block method.
@@ -35,7 +34,7 @@ export class ValidatorError extends Error {
     message: string = null,
     code: number = 422
   ) {
-    super();
+    super(message);
 
     this.name = this.constructor.name; // class name
     this.validator = validator; // validator name
@@ -75,7 +74,7 @@ export class Validator {
   * Returns a new instance of ValidatorError instance.
   */
 
-  protected _createValidatorError (value: any, recipe: RecipeObject): ValidatorError {
+  protected _createValidatorError (recipe: RecipeObject): ValidatorError {
     let message = typeof recipe.message === 'function'
       ? recipe.message()
       : recipe.message;
@@ -91,9 +90,7 @@ export class Validator {
 
   protected _createString (template, data): string {
     for (let key in data) {
-      let value = toString(data[key]);
-
-      template = template.replace(`%{${key}}`, value);
+      template = template.replace(`%{${key}}`, data[key]);
     }
     return template;
   }
@@ -119,7 +116,7 @@ export class Validator {
       let isValid = await validator.call(this.context, value, recipe);
       if (!isValid) {
         errors.push(
-          this._createValidatorError(value, recipe)
+          this._createValidatorError(recipe)
         );
 
         if (this.firstErrorOnly) break;

@@ -32,7 +32,7 @@ test('Validator.validate with onlyFirstError=true should return only one error',
   t.is(errors.length, 1);
 });
 
-test('recipe validator message can be a function', async (t) => {
+test('recipe message can be a function', async (t) => {
   let v = new Validator();
   let recipes = [
     {validator: 'presence', message: () => 'is required'}
@@ -42,7 +42,7 @@ test('recipe validator message can be a function', async (t) => {
   t.deepEqual(errors[0].message, 'is required');
 });
 
-test('recipe validator message variables %{...} should be replaced with related recipe variables', async (t) => {
+test('recipe message variables %{...} should be replaced with related recipe variables', async (t) => {
   let v = new Validator();
   let recipes = [
     {validator: 'presence', message: () => '%{foo} is required', foo: 'bar'}
