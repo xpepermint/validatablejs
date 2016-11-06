@@ -86,14 +86,14 @@ let recipes = [recipe];
 await v.validate(value, recipes);
 ```
 
-**ValidatorError(recipe, value, code)**
+**ValidatorError(validator, message, code)**
 
 > Validation error class which holds information about the invalid value.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| recipe | Object | Yes | - | Validator recipe object.
-| value | Any | Yes | - | The value which failed to pass the validation.
+| validator | String | Yes | - | Validator name.
+| message | String | Yes | - | Validation error message.
 | code | Integer | No | 422 | Error status code.
 
 ### Built-in Validators
