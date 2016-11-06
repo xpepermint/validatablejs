@@ -1,4 +1,5 @@
 import * as builtInValidators from './validators';
+import {toString} from 'typeable';
 
 /*
 * Definition of the validator block method.
@@ -11,7 +12,7 @@ export type ValidatorBlock = (value: any, recipe: any) => boolean | Promise<bool
 */
 
 export interface RecipeObject {
-  name: string; // validator name
+  validator: string; // validator name
   message: string | (() => string);
   [key: string]: any; // aditional properties
 }
@@ -21,8 +22,8 @@ export interface RecipeObject {
 */
 
 export class ValidatorError extends Error {
-  public value: any;
-  public recipe: RecipeObject;
+  public validator: string;
+  public message: string;
   public code: number;
 
   /*
@@ -30,20 +31,16 @@ export class ValidatorError extends Error {
   */
 
   public constructor (
-    value: any = null,
-    recipe: RecipeObject = null,
+    validator: string = null,
+    message: string = null,
     code: number = 422
   ) {
     super();
 
-    this.message = typeof recipe.message === 'function'
-      ? recipe.message()
-      : recipe.message;
-
-    this.name = this.constructor.name;
-    this.value = value;
-    this.recipe = Object.assign({}, recipe, {message: this.message});
-    this.code = code;
+    this.name = this.constructor.name; // class name
+    this.validator = validator; // validator name
+    this.message = message; // validation error message
+    this.code = code; // error code
   }
 }
 
@@ -79,7 +76,26 @@ export class Validator {
   */
 
   protected _createValidatorError (value: any, recipe: RecipeObject): ValidatorError {
-    return new ValidatorError(value, recipe);
+    let message = typeof recipe.message === 'function'
+      ? recipe.message()
+      : recipe.message;
+
+    message = this._createString(message, recipe); // apply variables to a message
+
+    return new ValidatorError(recipe.validator, message);
+  }
+
+  /*
+  * Replaces variables in a string (e.g. `%{variable}`) with object key values.
+  */
+
+  protected _createString (template, data): string {
+    for (let key in data) {
+      let value = toString(data[key]);
+
+      template = template.replace(`%{${key}}`, value);
+    }
+    return template;
   }
 
   /*
@@ -93,7 +109,7 @@ export class Validator {
     let errors = [];
 
     for (let recipe of recipes) {
-      let {name} = recipe;
+      let name = recipe.validator;
 
       let validator = this.validators[name];
       if (!validator) {

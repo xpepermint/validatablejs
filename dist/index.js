@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 const builtInValidators = require('./validators');
+const typeable_1 = require('typeable');
 /*
 * A validation error class.
 */
@@ -15,15 +16,12 @@ class ValidatorError extends Error {
     /*
     * Class constructor.
     */
-    constructor(value = null, recipe = null, code = 422) {
+    constructor(validator = null, message = null, code = 422) {
         super();
-        this.message = typeof recipe.message === 'function'
-            ? recipe.message()
-            : recipe.message;
-        this.name = this.constructor.name;
-        this.value = value;
-        this.recipe = Object.assign({}, recipe, { message: this.message });
-        this.code = code;
+        this.name = this.constructor.name; // class name
+        this.validator = validator; // validator name
+        this.message = message; // validation error message
+        this.code = code; // error code
     }
 }
 exports.ValidatorError = ValidatorError;
@@ -43,7 +41,21 @@ class Validator {
     * Returns a new instance of ValidatorError instance.
     */
     _createValidatorError(value, recipe) {
-        return new ValidatorError(value, recipe);
+        let message = typeof recipe.message === 'function'
+            ? recipe.message()
+            : recipe.message;
+        message = this._createString(message, recipe); // apply variables to a message
+        return new ValidatorError(recipe.validator, message);
+    }
+    /*
+    * Replaces variables in a string (e.g. `%{variable}`) with object key values.
+    */
+    _createString(template, data) {
+        for (let key in data) {
+            let value = typeable_1.toString(data[key]);
+            template = template.replace(`%{${key}}`, value);
+        }
+        return template;
     }
     /*
     * Validates the `value` against the `validations`.
@@ -52,7 +64,7 @@ class Validator {
         return __awaiter(this, void 0, void 0, function* () {
             let errors = [];
             for (let recipe of recipes) {
-                let { name } = recipe;
+                let name = recipe.validator;
                 let validator = this.validators[name];
                 if (!validator) {
                     throw new Error(`Unknown validator ${name}`);

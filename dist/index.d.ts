@@ -1,14 +1,14 @@
 export declare type ValidatorBlock = (value: any, recipe: any) => boolean | Promise<boolean>;
 export interface RecipeObject {
-    name: string;
+    validator: string;
     message: string | (() => string);
     [key: string]: any;
 }
 export declare class ValidatorError extends Error {
-    value: any;
-    recipe: RecipeObject;
+    validator: string;
+    message: string;
     code: number;
-    constructor(value?: any, recipe?: RecipeObject, code?: number);
+    constructor(validator?: string, message?: string, code?: number);
 }
 export declare class Validator {
     firstErrorOnly: boolean;
@@ -24,5 +24,6 @@ export declare class Validator {
         context?: any;
     });
     protected _createValidatorError(value: any, recipe: RecipeObject): ValidatorError;
+    protected _createString(template: any, data: any): string;
     validate(value: any, recipes?: RecipeObject[]): Promise<any[]>;
 }

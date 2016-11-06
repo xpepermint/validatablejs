@@ -32,8 +32,9 @@ let e = await v.validate(
   'John Smith', // value to validate
   [ // list of validations
     {
-      name: 'presence', // validator name
-      message: 'must be present' // validator options
+      validator: 'presence', // validator name
+      message: '%{foo} must be present', // validator options
+      foo: 'bar' // a custom variable for the message
     }
   ]
 ); // -> list of ValidatorError instances or an empty array
@@ -76,12 +77,12 @@ let v = new Validator({
 
 ```js
 let value = 'John Smith';
-let recipes = [
-  {
-    name: 'presence', // validator name
-    message: 'must be present' // validation error message
-  }
-];
+let recipe = {
+  validator: 'presence', // [required] validator name
+  message: '%{foo} must be present', // [required] validation error message (note that you can insert related recipe values by using the %{key} syntax)
+  foo: 'bar' // [optional] a custom variable
+};
+let recipes = [recipe];
 await v.validate(value, recipes);
 ```
 
@@ -127,7 +128,7 @@ await v.validate(value, recipes);
 
 ```js
 let recipe = {
-  name: 'block',
+  validator: 'block',
   message: 'must be present',
   async block ({value, recipe}) { return true }
 };
