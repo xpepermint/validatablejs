@@ -65,15 +65,6 @@ let v = new Validator({
 });
 ```
 
-**Validator.prototype.createValidatorError(value, recipe)**: ValidatorError
-
-> Validates a value against the provided options.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| value | Any | Yes | - | A value to validate.
-| recipe | Object | No | null | A configuration object describing a validator.
-
 **Validator.prototype.validate(value, recipes)**: Promise(ValidatorError[])
 
 > Validates a value against the provided options.

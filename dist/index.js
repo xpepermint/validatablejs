@@ -42,7 +42,7 @@ class Validator {
     /*
     * Returns a new instance of ValidatorError instance.
     */
-    createValidatorError(value, recipe) {
+    _createValidatorError(value, recipe) {
         return new ValidatorError(value, recipe);
     }
     /*
@@ -59,7 +59,7 @@ class Validator {
                 }
                 let isValid = yield validator.call(this.context, value, recipe);
                 if (!isValid) {
-                    errors.push(this.createValidatorError(value, recipe));
+                    errors.push(this._createValidatorError(value, recipe));
                     if (this.firstErrorOnly)
                         break;
                 }

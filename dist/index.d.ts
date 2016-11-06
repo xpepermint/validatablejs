@@ -23,6 +23,6 @@ export declare class Validator {
         };
         context?: any;
     });
-    createValidatorError(value: any, recipe: RecipeObject): ValidatorError;
+    protected _createValidatorError(value: any, recipe: RecipeObject): ValidatorError;
     validate(value: any, recipes?: RecipeObject[]): Promise<any[]>;
 }

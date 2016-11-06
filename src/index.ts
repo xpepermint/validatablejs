@@ -78,7 +78,7 @@ export class Validator {
   * Returns a new instance of ValidatorError instance.
   */
 
-  public createValidatorError (value: any, recipe: RecipeObject): ValidatorError {
+  protected _createValidatorError (value: any, recipe: RecipeObject): ValidatorError {
     return new ValidatorError(value, recipe);
   }
 
@@ -103,7 +103,7 @@ export class Validator {
       let isValid = await validator.call(this.context, value, recipe);
       if (!isValid) {
         errors.push(
-          this.createValidatorError(value, recipe)
+          this._createValidatorError(value, recipe)
         );
 
         if (this.firstErrorOnly) break;
