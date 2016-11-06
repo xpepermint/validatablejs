@@ -1,6 +1,7 @@
 import { absence } from './absence';
 import { arrayExclusion } from './array-exclusion';
 import { arrayInclusion } from './array-inclusion';
+import { arrayLength } from './array-length';
 import { block } from './block';
 import { BSONObjectID } from './bson-object-id';
 import { numberSize } from './number-size';
@@ -19,4 +20,4 @@ import { stringLowercase } from './string-lowercase';
 import { stringMatch } from './string-match';
 import { stringUppercase } from './string-uppercase';
 import { stringUUID } from './string-uuid';
-export { absence, arrayExclusion, arrayInclusion, block, BSONObjectID, numberSize, presence, stringBase64, stringDate, stringEmail, stringExclusion, stringFQDN, stringHexColor, stringHexadecimal, stringInclusion, stringJSON, stringLength, stringLowercase, stringMatch, stringUppercase, stringUUID };
+export { absence, arrayExclusion, arrayInclusion, arrayLength, block, BSONObjectID, numberSize, presence, stringBase64, stringDate, stringEmail, stringExclusion, stringFQDN, stringHexColor, stringHexadecimal, stringInclusion, stringJSON, stringLength, stringLowercase, stringMatch, stringUppercase, stringUUID };

@@ -1,6 +1,7 @@
 import {absence} from './absence';
 import {arrayExclusion} from './array-exclusion';
 import {arrayInclusion} from './array-inclusion';
+import {arrayLength} from './array-length';
 import {block} from './block';
 import {BSONObjectID} from './bson-object-id';
 import {numberSize} from './number-size';
@@ -24,6 +25,7 @@ export {
   absence,
   arrayExclusion,
   arrayInclusion,
+  arrayLength,
   block,
   BSONObjectID,
   numberSize,

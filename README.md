@@ -118,6 +118,17 @@ await v.validate(value, recipes);
 |--------|------|----------|---------|------------
 | values | Array | Yes | - | Array of allowed values.
 
+#### arrayLength
+
+> Validates the size of an array.
+
+| Option | Type | Required | Default | Description
+|--------|------|----------|---------|------------
+| min | Number | No | - | Allowed minimum items count.
+| minOrEqual | Number | No | - | Allowed minimum items count (allowing equal).
+| max | Number | No | - | Allowed maximum items count.
+| maxOrEqual | Number | No | - | Allowed maximum items count (allowing equal).
+
 #### block
 
 > Validates the specified field against the provided block function. If the function returns true then the field is treated as valid.

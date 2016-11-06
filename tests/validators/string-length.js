@@ -20,4 +20,6 @@ test('passes without options', (t) => {
 test('supports bytes length', (t) => {
   t.is(stringLength('ašč', {bytes: true, max: 3}), false);
   t.is(stringLength('ašč', {bytes: true, max: 6}), true);
+  t.is(stringLength('ašč', {minOrEqual: 3}), true);
+  t.is(stringLength('ašč', {maxOrEqual: 3}), true);
 });

@@ -19,4 +19,6 @@ test('passes without options', (t) => {
 
 test('passes when valid', (t) => {
   t.is(numberSize(100, {min: 10, max: 1000}), true);
+  t.is(numberSize(100, {minOrEqual: 100}), true);
+  t.is(numberSize(100, {maxOrEqual: 100}), true);
 });
