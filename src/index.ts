@@ -70,7 +70,7 @@ export class ValidatorError extends Error {
 
 export class Validator {
   public firstErrorOnly: boolean;
-  public validators: {[validator: string]: (value: any, validation: any) => boolean | Promise<boolean>};
+  public validators: {[validator: string]: ValidatorBlock};
   public context: any;
 
   /*

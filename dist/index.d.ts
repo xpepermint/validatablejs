@@ -19,7 +19,7 @@ export declare class ValidatorError extends Error {
 export declare class Validator {
     firstErrorOnly: boolean;
     validators: {
-        [validator: string]: (value: any, validation: any) => boolean | Promise<boolean>;
+        [validator: string]: ValidatorBlock;
     };
     context: any;
     constructor({firstErrorOnly, validators, context}?: {
