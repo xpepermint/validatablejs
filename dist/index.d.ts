@@ -4,17 +4,10 @@ export interface RecipeObject {
     message: string | (() => string);
     [key: string]: any;
 }
-export declare class ValidatorError extends Error {
+export interface ValidatorError {
     validator: string;
     message: string;
     code: number;
-    constructor(validator: string, message?: string, code?: number);
-    toObject(): {
-        name: string;
-        message: string;
-        validator: string;
-        code: number;
-    };
 }
 export declare class Validator {
     firstErrorOnly: boolean;
@@ -31,5 +24,5 @@ export declare class Validator {
     });
     protected _createValidatorError(recipe: RecipeObject): ValidatorError;
     protected _createString(template: any, data: any): string;
-    validate(value: any, recipes?: RecipeObject[]): Promise<any[]>;
+    validate(value: any, recipes?: RecipeObject[]): Promise<ValidatorError[]>;
 }

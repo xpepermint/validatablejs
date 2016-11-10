@@ -1,9 +1,10 @@
 "use strict";
-const typeable_1 = require('typeable');
-function arrayLength(value, { min, minOrEqual, max, maxOrEqual } = {}) {
+var typeable_1 = require("typeable");
+function arrayLength(value, _a) {
+    var _b = _a === void 0 ? {} : _a, min = _b.min, minOrEqual = _b.minOrEqual, max = _b.max, maxOrEqual = _b.maxOrEqual;
     if (!typeable_1.isArray(value))
         return false;
-    let size = value.length;
+    var size = value.length;
     if (typeable_1.isNumber(min) && !(size > min))
         return false;
     if (typeable_1.isNumber(minOrEqual) && !(size >= minOrEqual))

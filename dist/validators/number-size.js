@@ -1,6 +1,7 @@
 "use strict";
-const typeable_1 = require('typeable');
-function numberSize(value, { min, minOrEqual, max, maxOrEqual } = {}) {
+var typeable_1 = require("typeable");
+function numberSize(value, _a) {
+    var _b = _a === void 0 ? {} : _a, min = _b.min, minOrEqual = _b.minOrEqual, max = _b.max, maxOrEqual = _b.maxOrEqual;
     if (!typeable_1.isNumber(value))
         return false;
     if (typeable_1.isNumber(min) && !(value > min))

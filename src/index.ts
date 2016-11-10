@@ -20,48 +20,10 @@ export interface RecipeObject {
 * A validation error class.
 */
 
-export class ValidatorError extends Error {
-  public validator: string;
-  public message: string;
-  public code: number;
-
-  /*
-  * Class constructor.
-  */
-
-  public constructor (
-    validator: string,
-    message: string = null,
-    code: number = 422
-  ) {
-    super(message);
-
-    Object.defineProperty(this, 'name', { // class name
-      value: this.constructor.name,
-      writable: true
-    });
-    Object.defineProperty(this, 'message', { // validation error message
-      value: message,
-      writable: true
-    });
-    Object.defineProperty(this, 'validator', { // validator name
-      value: validator,
-      writable: true
-    });
-    Object.defineProperty(this, 'code', { // error code
-      value: code,
-      writable: true
-    });
-  }
-
-  /*
-  * Returns error data.
-  */
-
-  toObject () {
-    let {name, message, validator, code} = this;
-    return {name, message, validator, code};
-  }
+export interface ValidatorError {
+  validator: string;
+  message: string;
+  code: number;
 }
 
 /*
@@ -96,13 +58,14 @@ export class Validator {
   */
 
   protected _createValidatorError (recipe: RecipeObject): ValidatorError {
+    let {validator, code = 422} = recipe;
+
     let message = typeof recipe.message === 'function'
       ? recipe.message()
       : recipe.message;
-
     message = this._createString(message, recipe); // apply variables to a message
 
-    return new ValidatorError(recipe.validator, message);
+    return {validator, message, code};
   }
 
   /*
