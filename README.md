@@ -21,6 +21,19 @@ Run the command below to install the package.
 $ npm install --save validatable
 ```
 
+This package is targeting `es6`. If you plan to use it in a browser, you need to transpile it with [Babel](https://babeljs.io) or similar. The `.bablerc` configuration example below transpiles for browsers `>= IE9`.
+
+```js
+{
+  "presets": [
+    "es2015"
+  ],
+  "plugins": [
+    "transform-object-assign"
+  ]
+}
+```
+
 ## Example
 
 ```js
@@ -29,7 +42,7 @@ import {Validator} from 'validatable';
 let v = new Validator();
 
 let e = await v.validate(
-  'John Smith', // value to validate
+  '', // value to validate
   [ // list of validations
     {
       validator: 'presence', // validator name

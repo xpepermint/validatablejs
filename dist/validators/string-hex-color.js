@@ -1,5 +1,5 @@
 "use strict";
-var typeable_1 = require("typeable");
+const typeable_1 = require("typeable");
 function stringHexColor(value) {
     if (!typeable_1.isString(value))
         return false;
