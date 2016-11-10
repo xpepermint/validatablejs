@@ -74,7 +74,7 @@ var Validator = (function () {
     Validator.prototype.validate = function (value, recipes) {
         if (recipes === void 0) { recipes = []; }
         return __awaiter(this, void 0, void 0, function () {
-            var errors, _i, recipes_1, recipe, name, validator_1, isValid;
+            var errors, _i, recipes_1, recipe, name, validator, isValid;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -86,11 +86,11 @@ var Validator = (function () {
                             return [3 /*break*/, 4];
                         recipe = recipes_1[_i];
                         name = recipe.validator;
-                        validator_1 = this.validators[name];
-                        if (!validator_1) {
+                        validator = this.validators[name];
+                        if (!validator) {
                             throw new Error("Unknown validator " + name);
                         }
-                        return [4 /*yield*/, validator_1.call(this.context, value, recipe)];
+                        return [4 /*yield*/, validator.call(this.context, value, recipe)];
                     case 2:
                         isValid = _a.sent();
                         if (!isValid) {

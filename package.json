@@ -41,7 +41,7 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "0.16.x",
-    "typescript": "2.0.x"
+    "typescript": "2.1.0-dev.20161109"
   },
   "dependencies": {
     "typeable": "0.12.x"
