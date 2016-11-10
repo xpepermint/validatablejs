@@ -37,7 +37,7 @@ let e = await v.validate(
       foo: 'bar' // a custom variable for the message
     }
   ]
-); // -> list of ValidatorError instances or an empty array
+); // -> list of errors
 ```
 
 See the `./tests` folder for details.
@@ -66,7 +66,7 @@ let v = new Validator({
 });
 ```
 
-**Validator.prototype.validate(value, recipes)**: Promise(ValidatorError[])
+**Validator.prototype.validate(value, recipes)**: Promise(Object[])
 
 > Validates a value against the provided options.
 
@@ -85,16 +85,6 @@ let recipe = {
 let recipes = [recipe];
 await v.validate(value, recipes);
 ```
-
-**ValidatorError(validator, message, code)**
-
-> Validation error class which holds information about the invalid value.
-
-| Option | Type | Required | Default | Description
-|--------|------|----------|---------|------------
-| validator | String | Yes | - | Validator name.
-| message | String | No | null | Validation error message.
-| code | Integer | No | 422 | Error status code.
 
 ### Built-in Validators
 
