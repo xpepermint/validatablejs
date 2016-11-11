@@ -4,7 +4,7 @@
 
 > A library for synchronous and asynchronous input validation.
 
-This is a light weight open source package, for use on **server** or in **browser** (using module bundler). The source code is available on [GitHub](https://github.com/xpepermint/validatablejs) where you can also find our [issue tracker](https://github.com/xpepermint/validatablejs/issues).
+This is a light weight open source package for use on **server** or in **browser** (using module bundler). The source code is available on [GitHub](https://github.com/xpepermint/validatablejs) where you can also find our [issue tracker](https://github.com/xpepermint/validatablejs/issues).
 
 ## Related Projects
 
