@@ -1,9 +1,14 @@
-"use strict";
-const typeable_1 = require("typeable");
-function stringUppercase(value) {
-    if (!typeable_1.isString(value))
-        return false;
-    return value === value.toUpperCase();
-}
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.stringUppercase = stringUppercase;
-;
+
+var _typeable = require('typeable');
+
+function stringUppercase(value) {
+  if (!(0, _typeable.isString)(value)) return false;
+
+  return value === value.toUpperCase();
+};

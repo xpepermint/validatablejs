@@ -1,66 +1,200 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
-    });
-};
-const builtInValidators = require("./validators");
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Validator = undefined;
+
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+var _validators = require('./validators');
+
+var builtInValidators = _interopRequireWildcard(_validators);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /*
 * A core validation class.
 */
-class Validator {
-    /*
-    * Class constructor.
-    */
-    constructor({ firstErrorOnly = false, validators = {}, context = null } = {}) {
-        this.firstErrorOnly = firstErrorOnly;
-        this.validators = Object.assign({}, builtInValidators, validators);
-        this.context = context;
+
+var Validator = exports.Validator = function () {
+
+  /*
+  * Class constructor.
+  */
+
+  function Validator() {
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$firstErrorOnly = _ref.firstErrorOnly,
+        firstErrorOnly = _ref$firstErrorOnly === undefined ? false : _ref$firstErrorOnly,
+        _ref$validators = _ref.validators,
+        validators = _ref$validators === undefined ? {} : _ref$validators,
+        _ref$context = _ref.context,
+        context = _ref$context === undefined ? null : _ref$context;
+
+    (0, _classCallCheck3.default)(this, Validator);
+
+    this.firstErrorOnly = firstErrorOnly;
+    this.validators = (0, _extends3.default)({}, builtInValidators, validators);
+    this.context = context;
+  }
+
+  /*
+  * Returns a new instance of ValidatorError instance.
+  */
+
+  (0, _createClass3.default)(Validator, [{
+    key: '_createValidatorError',
+    value: function _createValidatorError(recipe) {
+      var validator = recipe.validator,
+          _recipe$code = recipe.code,
+          code = _recipe$code === undefined ? 422 : _recipe$code;
+
+
+      var message = typeof recipe.message === 'function' ? recipe.message() : recipe.message;
+      message = this._createString(message, recipe); // apply variables to a message
+
+      return { validator: validator, message: message, code: code };
     }
-    /*
-    * Returns a new instance of ValidatorError instance.
-    */
-    _createValidatorError(recipe) {
-        let { validator, code = 422 } = recipe;
-        let message = typeof recipe.message === 'function'
-            ? recipe.message()
-            : recipe.message;
-        message = this._createString(message, recipe); // apply variables to a message
-        return { validator, message, code };
-    }
+
     /*
     * Replaces variables in a string (e.g. `%{variable}`) with object key values.
     */
-    _createString(template, data) {
-        for (let key in data) {
-            template = template.replace(`%{${key}}`, data[key]);
-        }
-        return template;
+
+  }, {
+    key: '_createString',
+    value: function _createString(template, data) {
+      for (var key in data) {
+        template = template.replace('%{' + key + '}', data[key]);
+      }
+      return template;
     }
+
     /*
     * Validates the `value` against the `validations`.
     */
-    validate(value, recipes = []) {
-        return __awaiter(this, void 0, void 0, function* () {
-            let errors = [];
-            for (let recipe of recipes) {
-                let name = recipe.validator;
-                let validator = this.validators[name];
-                if (!validator) {
-                    throw new Error(`Unknown validator ${name}`);
-                }
-                let isValid = yield validator.call(this.context, value, recipe);
-                if (!isValid) {
-                    errors.push(this._createValidatorError(recipe));
-                    if (this.firstErrorOnly)
-                        break;
-                }
-            }
-            return errors;
-        });
+
+  }, {
+    key: 'validate',
+    value: function validate(value) {
+      var recipes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+
+      var errors, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, recipe, name, validator, isValid;
+
+      return _regenerator2.default.async(function validate$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              errors = [];
+              _iteratorNormalCompletion = true;
+              _didIteratorError = false;
+              _iteratorError = undefined;
+              _context.prev = 4;
+              _iterator = recipes[Symbol.iterator]();
+
+            case 6:
+              if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                _context.next = 22;
+                break;
+              }
+
+              recipe = _step.value;
+              name = recipe.validator;
+              validator = this.validators[name];
+
+              if (validator) {
+                _context.next = 12;
+                break;
+              }
+
+              throw new Error('Unknown validator ' + name);
+
+            case 12:
+              _context.next = 14;
+              return _regenerator2.default.awrap(validator.call(this.context, value, recipe));
+
+            case 14:
+              isValid = _context.sent;
+
+              if (isValid) {
+                _context.next = 19;
+                break;
+              }
+
+              errors.push(this._createValidatorError(recipe));
+
+              if (!this.firstErrorOnly) {
+                _context.next = 19;
+                break;
+              }
+
+              return _context.abrupt('break', 22);
+
+            case 19:
+              _iteratorNormalCompletion = true;
+              _context.next = 6;
+              break;
+
+            case 22:
+              _context.next = 28;
+              break;
+
+            case 24:
+              _context.prev = 24;
+              _context.t0 = _context['catch'](4);
+              _didIteratorError = true;
+              _iteratorError = _context.t0;
+
+            case 28:
+              _context.prev = 28;
+              _context.prev = 29;
+
+              if (!_iteratorNormalCompletion && _iterator.return) {
+                _iterator.return();
+              }
+
+            case 31:
+              _context.prev = 31;
+
+              if (!_didIteratorError) {
+                _context.next = 34;
+                break;
+              }
+
+              throw _iteratorError;
+
+            case 34:
+              return _context.finish(31);
+
+            case 35:
+              return _context.finish(28);
+
+            case 36:
+              return _context.abrupt('return', errors);
+
+            case 37:
+            case 'end':
+              return _context.stop();
+          }
+        }
+      }, null, this, [[4, 24, 28, 36], [29,, 31, 35]]);
     }
-}
-exports.Validator = Validator;
+  }]);
+  return Validator;
+}();

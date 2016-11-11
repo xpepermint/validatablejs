@@ -1,6 +1,12 @@
-"use strict";
-const typeable_1 = require("typeable");
-function absence(value) {
-    return typeable_1.isAbsent(value);
-}
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 exports.absence = absence;
+
+var _typeable = require('typeable');
+
+function absence(value) {
+  return (0, _typeable.isAbsent)(value);
+}
