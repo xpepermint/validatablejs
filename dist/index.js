@@ -9,6 +9,10 @@ var _regenerator = require('babel-runtime/regenerator');
 
 var _regenerator2 = _interopRequireDefault(_regenerator);
 
+var _getIterator2 = require('babel-runtime/core-js/get-iterator');
+
+var _getIterator3 = _interopRequireDefault(_getIterator2);
+
 var _extends2 = require('babel-runtime/helpers/extends');
 
 var _extends3 = _interopRequireDefault(_extends2);
@@ -106,7 +110,7 @@ var Validator = exports.Validator = function () {
               _didIteratorError = false;
               _iteratorError = undefined;
               _context.prev = 4;
-              _iterator = recipes[Symbol.iterator]();
+              _iterator = (0, _getIterator3.default)(recipes);
 
             case 6:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
