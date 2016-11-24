@@ -50,8 +50,13 @@ export class Validator {
     let errors = [];
 
     for (let recipe of recipes) {
-      let name = recipe.validator;
+      let condition = recipe.condition;
+      if (condition) {
+        let result = await condition.call(this.context, value, recipe);
+        if (!result) continue;
+      }
 
+      let name = recipe.validator;
       let validator = this.validators[name];
       if (!validator) {
         throw new Error(`Unknown validator ${name}`);

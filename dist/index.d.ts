@@ -2,6 +2,7 @@ export declare type ValidatorBlock = (value: any, recipe: any) => boolean | Prom
 export interface RecipeObject {
     validator: string;
     message: string | (() => string);
+    condition?: (() => string);
     [key: string]: any;
 }
 export interface ValidatorError {

@@ -99,7 +99,7 @@ var Validator = exports.Validator = function () {
     value: function validate(value) {
       var recipes = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
 
-      var errors, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, recipe, name, validator, isValid;
+      var errors, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, recipe, condition, result, name, validator, isValid;
 
       return _regenerator2.default.async(function validate$(_context) {
         while (1) {
@@ -114,90 +114,111 @@ var Validator = exports.Validator = function () {
 
             case 6:
               if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                _context.next = 22;
+                _context.next = 29;
                 break;
               }
 
               recipe = _step.value;
+              condition = recipe.condition;
+
+              if (!condition) {
+                _context.next = 15;
+                break;
+              }
+
+              _context.next = 12;
+              return _regenerator2.default.awrap(condition.call(this.context, value, recipe));
+
+            case 12:
+              result = _context.sent;
+
+              if (result) {
+                _context.next = 15;
+                break;
+              }
+
+              return _context.abrupt('continue', 26);
+
+            case 15:
               name = recipe.validator;
               validator = this.validators[name];
 
               if (validator) {
-                _context.next = 12;
+                _context.next = 19;
                 break;
               }
 
               throw new Error('Unknown validator ' + name);
 
-            case 12:
-              _context.next = 14;
+            case 19:
+              _context.next = 21;
               return _regenerator2.default.awrap(validator.call(this.context, value, recipe));
 
-            case 14:
+            case 21:
               isValid = _context.sent;
 
               if (isValid) {
-                _context.next = 19;
+                _context.next = 26;
                 break;
               }
 
               errors.push(this._createValidatorError(recipe));
 
               if (!this.firstErrorOnly) {
-                _context.next = 19;
+                _context.next = 26;
                 break;
               }
 
-              return _context.abrupt('break', 22);
+              return _context.abrupt('break', 29);
 
-            case 19:
+            case 26:
               _iteratorNormalCompletion = true;
               _context.next = 6;
               break;
 
-            case 22:
-              _context.next = 28;
+            case 29:
+              _context.next = 35;
               break;
 
-            case 24:
-              _context.prev = 24;
+            case 31:
+              _context.prev = 31;
               _context.t0 = _context['catch'](4);
               _didIteratorError = true;
               _iteratorError = _context.t0;
 
-            case 28:
-              _context.prev = 28;
-              _context.prev = 29;
+            case 35:
+              _context.prev = 35;
+              _context.prev = 36;
 
               if (!_iteratorNormalCompletion && _iterator.return) {
                 _iterator.return();
               }
 
-            case 31:
-              _context.prev = 31;
+            case 38:
+              _context.prev = 38;
 
               if (!_didIteratorError) {
-                _context.next = 34;
+                _context.next = 41;
                 break;
               }
 
               throw _iteratorError;
 
-            case 34:
-              return _context.finish(31);
+            case 41:
+              return _context.finish(38);
 
-            case 35:
-              return _context.finish(28);
+            case 42:
+              return _context.finish(35);
 
-            case 36:
+            case 43:
               return _context.abrupt('return', errors);
 
-            case 37:
+            case 44:
             case 'end':
               return _context.stop();
           }
         }
-      }, null, this, [[4, 24, 28, 36], [29,, 31, 35]]);
+      }, null, this, [[4, 31, 35, 43], [36,, 38, 42]]);
     }
   }]);
   return Validator;

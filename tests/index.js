@@ -1,7 +1,7 @@
 import test from 'ava';
 import {Validator} from '../dist/index';
 
-test('Validator.validate should return a list of errors', async (t) => {
+test('method `validate` should return a list of errors', async (t) => {
   let v = new Validator({
     context: {who: 'foo'}
   });
@@ -17,7 +17,7 @@ test('Validator.validate should return a list of errors', async (t) => {
   t.is(errors[0].code, 422);
 });
 
-test('Validator.validate with onlyFirstError=true should return only one error', async (t) => {
+test('method `validate` with onlyFirstError=true should return only one error', async (t) => {
   let v = new Validator({
     firstErrorOnly: true
   });
@@ -30,7 +30,7 @@ test('Validator.validate with onlyFirstError=true should return only one error',
   t.is(errors.length, 1);
 });
 
-test('recipe message can be a function', async (t) => {
+test('recipe `message` can be a function', async (t) => {
   let v = new Validator();
   let recipes = [
     {validator: 'presence', message: () => 'is required'}
@@ -40,7 +40,7 @@ test('recipe message can be a function', async (t) => {
   t.deepEqual(errors[0].message, 'is required');
 });
 
-test('recipe message variables %{...} should be replaced with related recipe variables', async (t) => {
+test('recipe `message` variables %{...} should be replaced with related recipe variables', async (t) => {
   let v = new Validator();
   let recipes = [
     {validator: 'presence', message: () => '%{foo} is required', foo: 'bar'}
@@ -48,4 +48,16 @@ test('recipe message variables %{...} should be replaced with related recipe var
   let errors = await v.validate('', recipes);
 
   t.deepEqual(errors[0].message, 'bar is required');
+});
+
+test('recipe `condition` key can switch off the validator', async (t) => {
+  let v = new Validator();
+  let recipes = [
+    {validator: 'presence', message: 'is required', condition: () => true},
+    {validator: 'presence', message: 'is required', condition: () => false},
+    {validator: 'presence', message: 'is required'}
+  ];
+  let errors = await v.validate('', recipes);
+
+  t.deepEqual(errors.length, 2);
 });
