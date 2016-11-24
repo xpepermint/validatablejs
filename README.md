@@ -80,7 +80,7 @@ let value = 'John Smith';
 let recipe = {
   validator: 'presence', // [required] validator name
   message: '%{foo} must be present', // [required] validation error message (note that you can insert related recipe values by using the %{key} syntax)
-  condition: () => true, [optional] a condition which switches the validation on/off
+  condition: () => true, // [optional] a condition which switches the validation on/off
   foo: 'bar' // [optional] a custom variable
 };
 let recipes = [recipe];
