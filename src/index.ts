@@ -2,7 +2,7 @@ import * as merge from 'lodash.merge';
 import * as builtInValidators from './validators';
 
 /*
-* Recype type definition.
+* Recipe type definition.
 */
 
 export interface ValidatorRecipe {
@@ -13,12 +13,22 @@ export interface ValidatorRecipe {
 }
 
 /*
+* Error type definition.
+*/
+
+export interface ValidatorError {
+  validator: string;
+  message: string;
+  code: number;
+}
+
+/*
 * A core validation class.
 */
 
 export class Validator {
   firstErrorOnly: boolean;
-  validators: any;
+  validators: {[name: string]: () => boolean | Promise<boolean>};
   context: any;
 
   /*
@@ -31,7 +41,7 @@ export class Validator {
     context = null
   }: {
     firstErrorOnly?: boolean,
-    validators?: any,
+    validators?: {[name: string]: () => boolean | Promise<boolean>},
     context?: any
   } = {}) {
     this.firstErrorOnly = firstErrorOnly;
@@ -43,9 +53,7 @@ export class Validator {
   * Returns a new instance of ValidatorError instance.
   */
 
-  _createValidatorError (
-    recipe: ValidatorRecipe
-  ) {
+  _createValidatorError (recipe: ValidatorRecipe): ValidatorError {
     let {validator, code = 422} = recipe;
 
     let message = typeof recipe.message === 'function'
@@ -60,10 +68,7 @@ export class Validator {
   * Replaces variables in a string (e.g. `%{variable}`) with object key values.
   */
 
-  _createString (
-    template,
-    data
-  ) {
+  _createString (template: string, data: any): string {
     for (let key in data) {
       template = template.replace(`%{${key}}`, data[key]);
     }
@@ -74,10 +79,7 @@ export class Validator {
   * Validates the `value` against the `validations`.
   */
 
-  async validate (
-    value: any,
-    recipes: ValidatorRecipe[] = []
-  ) {
+  async validate (value: any, recipes: ValidatorRecipe[] = []): Promise<ValidatorError[]> {
     let errors = [];
 
     for (let recipe of recipes) {
