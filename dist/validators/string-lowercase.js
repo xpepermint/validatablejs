@@ -1,14 +1,9 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.stringLowercase = stringLowercase;
-
-var _typeable = require('typeable');
-
+"use strict";
+var typeable_1 = require("typeable");
 function stringLowercase(value) {
-  if (!(0, _typeable.isString)(value)) return false;
-
-  return value === value.toLowerCase();
-};
+    if (!typeable_1.isString(value))
+        return false;
+    return value === value.toLowerCase();
+}
+exports.stringLowercase = stringLowercase;
+;

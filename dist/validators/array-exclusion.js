@@ -1,12 +1,7 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.arrayExclusion = arrayExclusion;
-
-var _arrayInclusion = require('./array-inclusion');
-
-function arrayExclusion(value, recipe) {
-  return !(0, _arrayInclusion.arrayInclusion)(value, recipe);
+"use strict";
+var array_inclusion_1 = require("./array-inclusion");
+function arrayExclusion(value, options) {
+    if (options === void 0) { options = {}; }
+    return !array_inclusion_1.arrayInclusion(value, options);
 }
+exports.arrayExclusion = arrayExclusion;

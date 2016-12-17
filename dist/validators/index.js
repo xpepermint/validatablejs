@@ -1,73 +1,45 @@
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.stringUUID = exports.stringUppercase = exports.stringMatch = exports.stringLowercase = exports.stringLength = exports.stringJSON = exports.stringInclusion = exports.stringHexadecimal = exports.stringHexColor = exports.stringFQDN = exports.stringExclusion = exports.stringEmail = exports.stringDate = exports.stringBase64 = exports.presence = exports.numberSize = exports.BSONObjectID = exports.block = exports.arrayLength = exports.arrayInclusion = exports.arrayExclusion = exports.absence = undefined;
-
-var _absence = require('./absence');
-
-var _arrayExclusion = require('./array-exclusion');
-
-var _arrayInclusion = require('./array-inclusion');
-
-var _arrayLength = require('./array-length');
-
-var _block = require('./block');
-
-var _bsonObjectId = require('./bson-object-id');
-
-var _numberSize = require('./number-size');
-
-var _presence = require('./presence');
-
-var _stringBase = require('./string-base64');
-
-var _stringDate = require('./string-date');
-
-var _stringEmail = require('./string-email');
-
-var _stringExclusion = require('./string-exclusion');
-
-var _stringFqdn = require('./string-fqdn');
-
-var _stringHexColor = require('./string-hex-color');
-
-var _stringHexadecimal = require('./string-hexadecimal');
-
-var _stringInclusion = require('./string-inclusion');
-
-var _stringJson = require('./string-json');
-
-var _stringLength = require('./string-length');
-
-var _stringLowercase = require('./string-lowercase');
-
-var _stringMatch = require('./string-match');
-
-var _stringUppercase = require('./string-uppercase');
-
-var _stringUuid = require('./string-uuid');
-
-exports.absence = _absence.absence;
-exports.arrayExclusion = _arrayExclusion.arrayExclusion;
-exports.arrayInclusion = _arrayInclusion.arrayInclusion;
-exports.arrayLength = _arrayLength.arrayLength;
-exports.block = _block.block;
-exports.BSONObjectID = _bsonObjectId.BSONObjectID;
-exports.numberSize = _numberSize.numberSize;
-exports.presence = _presence.presence;
-exports.stringBase64 = _stringBase.stringBase64;
-exports.stringDate = _stringDate.stringDate;
-exports.stringEmail = _stringEmail.stringEmail;
-exports.stringExclusion = _stringExclusion.stringExclusion;
-exports.stringFQDN = _stringFqdn.stringFQDN;
-exports.stringHexColor = _stringHexColor.stringHexColor;
-exports.stringHexadecimal = _stringHexadecimal.stringHexadecimal;
-exports.stringInclusion = _stringInclusion.stringInclusion;
-exports.stringJSON = _stringJson.stringJSON;
-exports.stringLength = _stringLength.stringLength;
-exports.stringLowercase = _stringLowercase.stringLowercase;
-exports.stringMatch = _stringMatch.stringMatch;
-exports.stringUppercase = _stringUppercase.stringUppercase;
-exports.stringUUID = _stringUuid.stringUUID;
+"use strict";
+var absence_1 = require("./absence");
+exports.absence = absence_1.absence;
+var array_exclusion_1 = require("./array-exclusion");
+exports.arrayExclusion = array_exclusion_1.arrayExclusion;
+var array_inclusion_1 = require("./array-inclusion");
+exports.arrayInclusion = array_inclusion_1.arrayInclusion;
+var array_length_1 = require("./array-length");
+exports.arrayLength = array_length_1.arrayLength;
+var block_1 = require("./block");
+exports.block = block_1.block;
+var bson_object_id_1 = require("./bson-object-id");
+exports.BSONObjectID = bson_object_id_1.BSONObjectID;
+var number_size_1 = require("./number-size");
+exports.numberSize = number_size_1.numberSize;
+var presence_1 = require("./presence");
+exports.presence = presence_1.presence;
+var string_base64_1 = require("./string-base64");
+exports.stringBase64 = string_base64_1.stringBase64;
+var string_date_1 = require("./string-date");
+exports.stringDate = string_date_1.stringDate;
+var string_email_1 = require("./string-email");
+exports.stringEmail = string_email_1.stringEmail;
+var string_exclusion_1 = require("./string-exclusion");
+exports.stringExclusion = string_exclusion_1.stringExclusion;
+var string_fqdn_1 = require("./string-fqdn");
+exports.stringFQDN = string_fqdn_1.stringFQDN;
+var string_hex_color_1 = require("./string-hex-color");
+exports.stringHexColor = string_hex_color_1.stringHexColor;
+var string_hexadecimal_1 = require("./string-hexadecimal");
+exports.stringHexadecimal = string_hexadecimal_1.stringHexadecimal;
+var string_inclusion_1 = require("./string-inclusion");
+exports.stringInclusion = string_inclusion_1.stringInclusion;
+var string_json_1 = require("./string-json");
+exports.stringJSON = string_json_1.stringJSON;
+var string_length_1 = require("./string-length");
+exports.stringLength = string_length_1.stringLength;
+var string_lowercase_1 = require("./string-lowercase");
+exports.stringLowercase = string_lowercase_1.stringLowercase;
+var string_match_1 = require("./string-match");
+exports.stringMatch = string_match_1.stringMatch;
+var string_uppercase_1 = require("./string-uppercase");
+exports.stringUppercase = string_uppercase_1.stringUppercase;
+var string_uuid_1 = require("./string-uuid");
+exports.stringUUID = string_uuid_1.stringUUID;

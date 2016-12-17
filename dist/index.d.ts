@@ -1,29 +1,23 @@
-export declare type ValidatorBlock = (value: any, recipe: any) => boolean | Promise<boolean>;
-export interface RecipeObject {
-    validator: string;
-    message: string | (() => string);
-    condition?: (() => string);
-    [key: string]: any;
-}
-export interface ValidatorError {
+export interface ValidatorRecipe {
     validator: string;
     message: string;
-    code: number;
+    condition?: () => boolean | Promise<boolean>;
+    [key: string]: any;
 }
 export declare class Validator {
     firstErrorOnly: boolean;
-    validators: {
-        [validator: string]: ValidatorBlock;
-    };
+    validators: any;
     context: any;
     constructor({firstErrorOnly, validators, context}?: {
         firstErrorOnly?: boolean;
-        validators?: {
-            [name: string]: ValidatorBlock;
-        };
+        validators?: any;
         context?: any;
     });
-    protected _createValidatorError(recipe: RecipeObject): ValidatorError;
-    protected _createString(template: any, data: any): string;
-    validate(value: any, recipes?: RecipeObject[]): Promise<ValidatorError[]>;
+    _createValidatorError(recipe: ValidatorRecipe): {
+        validator: string;
+        message: any;
+        code: any;
+    };
+    _createString(template: any, data: any): any;
+    validate(value: any, recipes?: ValidatorRecipe[]): Promise<any[]>;
 }

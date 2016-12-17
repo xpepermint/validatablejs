@@ -21,6 +21,8 @@ Run the command below to install the package.
 $ npm install --save validatable
 ```
 
+This package uses promises thus you need to use [Promise polyfill](https://github.com/taylorhakes/promise-polyfill) when promises are not supported.
+
 ## Example
 
 ```js
@@ -89,11 +91,11 @@ await v.validate(value, recipes);
 
 ### Built-in Validators
 
-#### absence
+**absence**
 
 > Validates that the specified field is blank.
 
-#### arrayExclusion
+**arrayExclusion**
 
 > Validates that the specified field is not in an array of values.
 
@@ -101,7 +103,7 @@ await v.validate(value, recipes);
 |--------|------|----------|---------|------------
 | values | Array | Yes | - | Array of restricted values.
 
-#### arrayInclusion
+**arrayInclusion**
 
 > Validates that the specified field is in an array of values.
 
@@ -109,7 +111,7 @@ await v.validate(value, recipes);
 |--------|------|----------|---------|------------
 | values | Array | Yes | - | Array of allowed values.
 
-#### arrayLength
+**arrayLength**
 
 > Validates the size of an array.
 
@@ -120,7 +122,7 @@ await v.validate(value, recipes);
 | max | Number | No | - | Allowed maximum items count.
 | maxOrEqual | Number | No | - | Allowed maximum items count (allowing equal).
 
-#### block
+**block**
 
 > Validates the specified field against the provided block function. If the function returns true then the field is treated as valid.
 
@@ -132,15 +134,15 @@ await v.validate(value, recipes);
 let recipe = {
   validator: 'block',
   message: 'must be present',
-  async block ({value, recipe}) { return true }
+  async block (value, recipe) { return true }
 };
 ```
 
-#### BSONObjectID
+**BSONObjectID**
 
 > Validates that the specified field is a valid hex-encoded representation of a [MongoDB ObjectID](http://docs.mongodb.org/manual/reference/object-id/).
 
-#### numberSize
+**numberSize**
 
 > Validates the size of a number.
 
@@ -151,15 +153,15 @@ let recipe = {
 | max | Number | No | - | Allowed maximum value.
 | maxOrEqual | Number | No | - | Allowed maximum value (allowing equal).
 
-#### presence
+**presence**
 
 > Validates that the specified field is not blank.
 
-#### stringBase64
+**stringBase64**
 
 > Validates that the specified field is base64 encoded string.
 
-#### stringDate
+**stringDate**
 
 > Validates that the specified field is a date string.
 
@@ -167,7 +169,7 @@ let recipe = {
 |--------|------|----------|----------|-----------
 | iso | Boolean | No | false | When `true` only ISO-8601 date format is accepted.
 
-#### stringEmail
+**stringEmail**
 
 > Validates that the specified field is an email.
 
@@ -177,7 +179,7 @@ let recipe = {
 | allowUtf8LocalPart | Boolean | No | false | When set to false, the validator will not allow any non-English UTF8 character in email address' local part.
 | requireTld | Boolean | No | true | When set to false, email addresses without having TLD in their domain will also be matched.
 
-#### stringExclusion
+**stringExclusion**
 
 > Checks if the string does not contain the seed.
 
@@ -185,7 +187,7 @@ let recipe = {
 |--------|------|----------|---------|------------
 | seed | String | Yes | - | The seed which should exist in the string.
 
-#### stringFQDN
+**stringFQDN**
 
 > Validates that the specified field is a fully qualified domain name (e.g. domain.com).
 
@@ -195,15 +197,15 @@ let recipe = {
 | allowUnderscores | Boolean | No | false | Allow string to include underscores.
 | allowTrailingDot | Boolean | No | false | Allow string to include a trailing dot.
 
-#### stringHexColor
+**stringHexColor**
 
 > Validates that the specified field is a hexadecimal color string.
 
-#### stringHexadecimal
+**stringHexadecimal**
 
 > Validates that the specified field is a hexadecimal number.
 
-#### stringInclusion
+**stringInclusion**
 
 > Checks if the string contains the seed.
 
@@ -211,11 +213,11 @@ let recipe = {
 |--------|------|----------|---------|------------
 | seed | String | Yes | - | The seed which should exist in the string.
 
-#### stringJSON
+**stringJSON**
 
 > Validates that the specified field is a stringified JSON string.
 
-#### stringLength
+**stringLength**
 
 > Validates the length of the specified field.
 
@@ -227,11 +229,11 @@ let recipe = {
 | max | Number | No | - | Allowed maximum number of characters.
 | maxOrEqual | Number | No | - | Allowed maximum number of characters (allowing equal).
 
-#### stringLowercase
+**stringLowercase**
 
 > Validates that the specified field is lowercase.
 
-#### stringMatch
+**stringMatch**
 
 > Validates that the specified field matches the pattern.
 
@@ -240,11 +242,11 @@ let recipe = {
 | pattern | String | Yes | - | Regular expression pattern.
 | modifiers | String | No | - | Regular expression modifiers.
 
-#### stringUppercase
+**stringUppercase**
 
 > Validates that the specified field is uppercase.
 
-#### stringUUID
+**stringUUID**
 
 > Validates that the specified field is a [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier).
 
