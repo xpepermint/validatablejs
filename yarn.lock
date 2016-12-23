@@ -1766,7 +1766,7 @@ lodash.isequal@^4.4.0:
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.4.0.tgz#6295768e98e14dc15ce8d362ef6340db82852031"
 
-lodash.merge@4.6.0, lodash.merge@^4.6.0:
+lodash.merge@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
 
@@ -2639,11 +2639,9 @@ type-name@^2.0.1:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/type-name/-/type-name-2.0.2.tgz#efe7d4123d8ac52afff7f40c7e4dec5266008fb4"
 
-typeable@^0.21.0:
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/typeable/-/typeable-0.21.0.tgz#25c9072e7af527086e6610b85444aa06468be09c"
-  dependencies:
-    lodash.merge "4.6.0"
+typeable@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/typeable/-/typeable-2.0.0.tgz#24a622debd12550a40e238d128f06fcbca8d9e69"
 
 typescript@^2.1.4:
   version "2.1.4"
