@@ -27,7 +27,7 @@ export interface ValidatorError {
 */
 
 export class Validator {
-  firstErrorOnly: boolean;
+  failFast: boolean;
   validators: {[name: string]: () => boolean | Promise<boolean>};
   context: any;
 
@@ -36,15 +36,15 @@ export class Validator {
   */
 
   constructor ({
-    firstErrorOnly = false,
+    failFast = false,
     validators = {},
     context = null
   }: {
-    firstErrorOnly?: boolean,
+    failFast?: boolean,
     validators?: {[name: string]: () => boolean | Promise<boolean>},
     context?: any
   } = {}) {
-    this.firstErrorOnly = firstErrorOnly;
+    this.failFast = failFast;
     this.validators = merge(builtInValidators, validators);
     this.context = context;
   }
@@ -101,7 +101,7 @@ export class Validator {
           this._createValidatorError(recipe)
         );
 
-        if (this.firstErrorOnly) break;
+        if (this.failFast) break;
       }
     }
 

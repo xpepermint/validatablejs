@@ -44,8 +44,8 @@ var Validator = (function () {
     * Class constructor.
     */
     function Validator(_a) {
-        var _b = _a === void 0 ? {} : _a, _c = _b.firstErrorOnly, firstErrorOnly = _c === void 0 ? false : _c, _d = _b.validators, validators = _d === void 0 ? {} : _d, _e = _b.context, context = _e === void 0 ? null : _e;
-        this.firstErrorOnly = firstErrorOnly;
+        var _b = _a === void 0 ? {} : _a, _c = _b.failFast, failFast = _c === void 0 ? false : _c, _d = _b.validators, validators = _d === void 0 ? {} : _d, _e = _b.context, context = _e === void 0 ? null : _e;
+        this.failFast = failFast;
         this.validators = merge(builtInValidators, validators);
         this.context = context;
     }
@@ -106,7 +106,7 @@ var Validator = (function () {
                         isValid = _a.sent();
                         if (!isValid) {
                             errors.push(this._createValidatorError(recipe));
-                            if (this.firstErrorOnly)
+                            if (this.failFast)
                                 return [3 /*break*/, 6];
                         }
                         _a.label = 5;

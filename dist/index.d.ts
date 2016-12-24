@@ -10,13 +10,13 @@ export interface ValidatorError {
     code: number;
 }
 export declare class Validator {
-    firstErrorOnly: boolean;
+    failFast: boolean;
     validators: {
         [name: string]: () => boolean | Promise<boolean>;
     };
     context: any;
-    constructor({firstErrorOnly, validators, context}?: {
-        firstErrorOnly?: boolean;
+    constructor({failFast, validators, context}?: {
+        failFast?: boolean;
         validators?: {
             [name: string]: () => boolean | Promise<boolean>;
         };

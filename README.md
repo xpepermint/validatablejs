@@ -46,13 +46,13 @@ See the `./tests` folder for details.
 
 ## API
 
-**Validator({firstErrorOnly, validators, context})**
+**Validator({failFast, validators, context})**
 
 > A core validation class.
 
 | Option | Type | Required | Default | Description
 |--------|------|----------|---------|------------
-| firstErrorOnly | Boolean | No | false | When set to `true`, the validation stops after the first validation error.
+| failFast | Boolean | No | false | When set to `true`, the validation stops after the first validation error.
 | validators | Object | No | built-in validators | Object with custom validators (this variable is merged with built-in validators thus you can override a validator key if you need to).
 | context | Object | No | null | A context reference which is applied to each validator method.
 
@@ -60,7 +60,7 @@ See the `./tests` folder for details.
 import {Validator} from 'validatable';
 
 let v = new Validator({
-  firstErrorOnly: true,
+  failFast: true,
   validators: {
     async coolness ({value, recipe}}) { return value === 'cool' } // custom validator
   },

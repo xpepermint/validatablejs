@@ -19,7 +19,7 @@ test('method `validate` should return a list of errors', async (t) => {
 
 test('method `validate` with onlyFirstError=true should return only one error', async (t) => {
   let v = new Validator({
-    firstErrorOnly: true
+    failFast: true
   });
   let recipes = [
     {validator: 'presence', message: 'is required'},
