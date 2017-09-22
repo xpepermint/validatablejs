@@ -238,8 +238,7 @@ let recipe = {
 
 | Key | Type | Required | Default | Description
 |-----|------|----------|---------|------------
-| pattern | String | Yes | - | Regular expression pattern.
-| modifiers | String | No | - | Regular expression modifiers.
+| regexp | RegExp | Yes | - | Regular expression pattern.
 
 **stringUppercase**
 

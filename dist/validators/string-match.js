@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var typeable_1 = require("typeable");
 function stringMatch(value, recipe) {
     if (recipe === void 0) { recipe = {}; }

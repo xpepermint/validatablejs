@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var typeable_1 = require("typeable");
 function stringInclusion(value, options) {
     if (options === void 0) { options = {}; }

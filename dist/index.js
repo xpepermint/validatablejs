@@ -4,12 +4,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t;
-    return { next: verb(0), "throw": verb(1), "return": verb(2) };
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -34,12 +34,13 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+exports.__esModule = true;
 var merge = require("lodash.merge");
 var builtInValidators = require("./validators");
 /*
 * A core validation class.
 */
-var Validator = (function () {
+var Validator = /** @class */ (function () {
     /*
     * Class constructor.
     */
@@ -83,12 +84,10 @@ var Validator = (function () {
                         _i = 0, recipes_1 = recipes;
                         _a.label = 1;
                     case 1:
-                        if (!(_i < recipes_1.length))
-                            return [3 /*break*/, 6];
+                        if (!(_i < recipes_1.length)) return [3 /*break*/, 6];
                         recipe = recipes_1[_i];
                         condition = recipe.condition;
-                        if (!condition)
-                            return [3 /*break*/, 3];
+                        if (!condition) return [3 /*break*/, 3];
                         return [4 /*yield*/, condition.call(this.context, value, recipe)];
                     case 2:
                         result = _a.sent();

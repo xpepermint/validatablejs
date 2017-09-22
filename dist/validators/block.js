@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 function block(value, options) {
     if (options === void 0) { options = {}; }
     if (!options)

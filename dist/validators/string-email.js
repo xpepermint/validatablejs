@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var typeable_1 = require("typeable");
 var string_fqdn_1 = require("./string-fqdn");
 var string_length_1 = require("./string-length");
