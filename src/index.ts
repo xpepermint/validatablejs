@@ -7,7 +7,8 @@ import * as builtInValidators from './validators';
 
 export interface ValidatorRecipe {
   validator: string;
-  message: string;
+  message?: string;
+  code?: number;
   condition?: () => boolean | Promise<boolean>;
   [key: string]: any;
 }
@@ -69,9 +70,14 @@ export class Validator {
   */
 
   _createString (template: string, data: any): string {
+    if (!template) {
+      return template;
+    }
+
     for (let key in data) {
       template = template.replace(`%{${key}}`, data[key]);
     }
+
     return template;
   }
 

@@ -50,6 +50,20 @@ test('recipe `message` variables %{...} should be replaced with related recipe v
   t.deepEqual(errors[0].message, 'bar is required');
 });
 
+test('recipe `message` can blank or absent', async (t) => {
+  let v = new Validator();
+  let recipes = [
+    {validator: 'presence', message: null },
+    {validator: 'presence', message: undefined },
+    {validator: 'presence' },
+  ];
+  let errors = await v.validate('', recipes);
+
+  t.deepEqual(errors[0].message, null);
+  t.deepEqual(errors[1].message, undefined);
+  t.deepEqual(errors[2].message, undefined);
+});
+
 test('recipe `condition` key can switch off the validator', async (t) => {
   let v = new Validator();
   let recipes = [

@@ -80,7 +80,8 @@ let v = new Validator({
 let value = 'John Smith';
 let recipe = {
   validator: 'presence', // [required] validator name
-  message: '%{foo} must be present', // [required] validation error message (note that you can insert related recipe values by using the %{key} syntax)
+  message: '%{foo} must be present', // [optional] validation error message (note that you can insert related recipe values by using the %{key} syntax)
+  code: 422, // [optional] validation error code
   condition: () => true, // [optional] a condition which switches the validation on/off
   foo: 'bar' // [optional] a custom variable
 };
