@@ -1,6 +1,6 @@
 {
   "name": "validatable",
-  "version": "0.30.0",
+  "version": "0.31.0",
   "description": "A library for synchronous and asynchronous input validation.",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -41,11 +41,11 @@
   "license": "MIT",
   "devDependencies": {
     "@types/lodash.merge": "^4.6.3",
-    "ava": "^0.22.0",
-    "typescript": "^2.5.3"
+    "ava": "^0.24.0",
+    "typescript": "^2.6.2"
   },
   "dependencies": {
     "lodash.merge": "^4.6.0",
-    "typeable": "^2.3.1"
+    "typeable": "^2.4.0"
   }
 }
