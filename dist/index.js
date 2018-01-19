@@ -36,6 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 var merge = require("lodash.merge");
+var typeable_1 = require("typeable");
 var builtInValidators = require("./validators");
 /*
 * A core validation class.
@@ -79,43 +80,60 @@ var Validator = /** @class */ (function () {
     Validator.prototype.validate = function (value, recipes) {
         if (recipes === void 0) { recipes = []; }
         return __awaiter(this, void 0, void 0, function () {
-            var errors, _i, recipes_1, recipe, condition, result, name, validator, isValid;
+            var _this = this;
+            var errors, _loop_1, this_1, _i, recipes_1, recipe, state_1;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         errors = [];
+                        _loop_1 = function (recipe) {
+                            var condition, result, name, validator, isValid;
+                            return __generator(this, function (_a) {
+                                switch (_a.label) {
+                                    case 0:
+                                        condition = recipe.condition;
+                                        if (!condition) return [3 /*break*/, 2];
+                                        return [4 /*yield*/, condition.call(this_1.context, value, recipe)];
+                                    case 1:
+                                        result = _a.sent();
+                                        if (!result)
+                                            return [2 /*return*/, "continue"];
+                                        _a.label = 2;
+                                    case 2:
+                                        name = recipe.validator;
+                                        validator = this_1.validators[name];
+                                        if (!validator) {
+                                            throw new Error("Unknown validator " + name);
+                                        }
+                                        return [4 /*yield*/, Promise.all((typeable_1.isArray(value) ? value : [value])
+                                                .map(function (v) { return validator.call(_this.context, v, recipe); })).then(function (r) { return r.indexOf(false) === -1; })];
+                                    case 3:
+                                        isValid = _a.sent();
+                                        if (!isValid) {
+                                            errors.push(this_1._createValidatorError(recipe));
+                                            if (this_1.failFast)
+                                                return [2 /*return*/, "break"];
+                                        }
+                                        return [2 /*return*/];
+                                }
+                            });
+                        };
+                        this_1 = this;
                         _i = 0, recipes_1 = recipes;
                         _a.label = 1;
                     case 1:
-                        if (!(_i < recipes_1.length)) return [3 /*break*/, 6];
+                        if (!(_i < recipes_1.length)) return [3 /*break*/, 4];
                         recipe = recipes_1[_i];
-                        condition = recipe.condition;
-                        if (!condition) return [3 /*break*/, 3];
-                        return [4 /*yield*/, condition.call(this.context, value, recipe)];
+                        return [5 /*yield**/, _loop_1(recipe)];
                     case 2:
-                        result = _a.sent();
-                        if (!result)
-                            return [3 /*break*/, 5];
+                        state_1 = _a.sent();
+                        if (state_1 === "break")
+                            return [3 /*break*/, 4];
                         _a.label = 3;
                     case 3:
-                        name = recipe.validator;
-                        validator = this.validators[name];
-                        if (!validator) {
-                            throw new Error("Unknown validator " + name);
-                        }
-                        return [4 /*yield*/, validator.call(this.context, value, recipe)];
-                    case 4:
-                        isValid = _a.sent();
-                        if (!isValid) {
-                            errors.push(this._createValidatorError(recipe));
-                            if (this.failFast)
-                                return [3 /*break*/, 6];
-                        }
-                        _a.label = 5;
-                    case 5:
                         _i++;
                         return [3 /*break*/, 1];
-                    case 6: return [2 /*return*/, errors];
+                    case 4: return [2 /*return*/, errors];
                 }
             });
         });

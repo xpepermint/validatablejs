@@ -17,6 +17,17 @@ test('method `validate` should return a list of errors', async (t) => {
   t.is(errors[0].code, 422);
 });
 
+test('method `validate` should handle array values', async (t) => {
+  let v = new Validator();
+  let recipes = [
+    {validator: 'presence', message: 'is required'},
+  ];
+  let errors = await v.validate(['', 'a'], recipes);
+
+  t.is(errors.length, 1);
+  t.is(errors[0].validator, 'presence');
+});
+
 test('method `validate` with onlyFirstError=true should return only one error', async (t) => {
   let v = new Validator({
     failFast: true
@@ -75,3 +86,4 @@ test('recipe `condition` key can switch off the validator', async (t) => {
 
   t.deepEqual(errors.length, 2);
 });
+

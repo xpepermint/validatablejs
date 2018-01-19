@@ -1,4 +1,5 @@
 import merge = require('lodash.merge');
+import {isArray} from 'typeable';
 import * as builtInValidators from './validators';
 
 /*
@@ -101,7 +102,11 @@ export class Validator {
         throw new Error(`Unknown validator ${name}`);
       }
 
-      let isValid = await validator.call(this.context, value, recipe);
+      let isValid = await Promise.all(
+        (isArray(value) ? value : [value])
+          .map((v) => validator.call(this.context, v, recipe))
+      ).then((r) => r.indexOf(false) === -1);
+
       if (!isValid) {
         errors.push(
           this._createValidatorError(recipe)
