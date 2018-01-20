@@ -1,4 +1,4 @@
-export interface Options {
+export interface ArrayInclusionOptions {
     values?: any[];
 }
-export declare function arrayInclusion(value: any, options?: Options): boolean;
+export declare function arrayInclusion(value: any, options?: ArrayInclusionOptions): boolean;

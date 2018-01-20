@@ -1,5 +1,5 @@
-import {toString} from 'typeable';
-import {stringHexadecimal} from './string-hexadecimal';
+import { toString } from 'typeable';
+import { stringHexadecimal } from './string-hexadecimal';
 
 export function BSONObjectID (value: any): boolean {
   value = toString(value);

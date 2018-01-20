@@ -1,4 +1,4 @@
-export interface Options {
+export interface StringUUIDOptions {
     version?: number;
 }
-export declare function stringUUID(value: any, recipe?: Options): boolean;
+export declare function stringUUID(value: any, recipe?: StringUUIDOptions): boolean;

@@ -1,5 +1,5 @@
 import test from 'ava';
-import {stringUppercase} from '../../dist/validators';
+import { stringUppercase } from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringUppercase(true), false);

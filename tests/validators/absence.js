@@ -1,5 +1,5 @@
 import test from 'ava';
-import {absence} from '../../dist/validators';
+import { absence } from '../../dist/validators';
 
 test('fails when not blank', (t) => {
   t.is(absence('text'), false);

@@ -1,13 +1,10 @@
-import {
-  isString,
-  toString
-} from 'typeable';
+import { isString, toString } from 'typeable';
 
-export interface Options {
+export interface StringInclusionOptions {
   seed?: string;
 }
 
-export function stringInclusion (value: any, options: Options = {}): boolean {
+export function stringInclusion (value: any, options: StringInclusionOptions = {}): boolean {
   if (!isString(value)) return false;
 
   let {seed} = options;

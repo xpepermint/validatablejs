@@ -1,5 +1,5 @@
 import test from 'ava';
-import {stringJSON} from '../../dist/validators';
+import { stringJSON } from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringJSON(true), false);

@@ -1,6 +1,6 @@
-export interface Options {
+export interface StringEmailOptions {
     allowDisplayName?: boolean;
     allowUtf8LocalPart?: boolean;
     requireTld?: boolean;
 }
-export declare function stringEmail(value: any, recipe?: Options): boolean;
+export declare function stringEmail(value: any, recipe?: StringEmailOptions): boolean;

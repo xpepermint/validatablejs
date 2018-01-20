@@ -1,5 +1,5 @@
 import test from 'ava';
-import {stringHexadecimal} from '../../dist/validators';
+import { stringHexadecimal } from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringHexadecimal(true), false);

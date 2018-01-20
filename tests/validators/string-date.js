@@ -1,5 +1,5 @@
 import test from 'ava';
-import {stringDate} from '../../dist/validators';
+import { stringDate } from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringDate(true), false);
@@ -10,7 +10,7 @@ test('fails when invalid', (t) => {
 });
 
 test('fails when invalid iso8601', (t) => {
-  t.is(stringDate('12.12.2016', {iso: true}), false);
+  t.is(stringDate('12.12.2016', { iso: true }), false);
 });
 
 test('passes when valid', (t) => {

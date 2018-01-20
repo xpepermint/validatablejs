@@ -1,4 +1,4 @@
-export interface Options {
+export interface StringExclusionOptions {
     seed?: string;
 }
-export declare function stringExclusion(value: any, options?: Options): boolean;
+export declare function stringExclusion(value: any, options?: StringExclusionOptions): boolean;

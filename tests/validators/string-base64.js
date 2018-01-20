@@ -1,5 +1,5 @@
 import test from 'ava';
-import {stringBase64} from '../../dist/validators';
+import { stringBase64 } from '../../dist/validators';
 
 test('fails when not a string', (t) => {
   t.is(stringBase64(true), false);

@@ -1,9 +1,9 @@
-import {stringInclusion} from './string-inclusion';
+import { stringInclusion } from './string-inclusion';
 
-export interface Options {
+export interface StringExclusionOptions {
   seed?: string;
 }
 
-export function stringExclusion (value: any, options: Options = {}): boolean {
+export function stringExclusion (value: any, options: StringExclusionOptions = {}): boolean {
   return !stringInclusion(value, options);
 }

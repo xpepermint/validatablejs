@@ -1,9 +1,6 @@
-import {
-  isString,
-  isNumber
-} from 'typeable';
+import { isString, isNumber } from 'typeable';
 
-export interface Options {
+export interface StringLengthOptions {
   bytes?: boolean;
   min?: number;
   minOrEqual?: number;
@@ -11,10 +8,10 @@ export interface Options {
   maxOrEqual?: number;
 }
 
-export function stringLength (value: any, recipe: Options = {}): boolean {
+export function stringLength (value: any, recipe: StringLengthOptions = {}): boolean {
   if (!isString(value)) return false;
 
-  let {bytes = false, min, minOrEqual, max, maxOrEqual} = recipe;
+  let { bytes = false, min, minOrEqual, max, maxOrEqual } = recipe;
   let len = bytes
     ? encodeURI(value).split(/%..|./).length - 1
     : value.length;

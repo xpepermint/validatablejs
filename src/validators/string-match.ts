@@ -1,12 +1,12 @@
-import {isString} from 'typeable';
+import { isString } from 'typeable';
 
-export interface Options {
+export interface StringMatchOptions {
   regexp?: RegExp;
 }
 
-export function stringMatch (value: any, recipe: Options = {}): boolean {
+export function stringMatch (value: any, recipe: StringMatchOptions = {}): boolean {
   if (!isString(value)) return false;
 
-  let {regexp} = recipe;
+  let { regexp } = recipe;
   return regexp.test(value);
 };

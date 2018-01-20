@@ -1,20 +1,17 @@
-import {
-  isArray,
-  isNumber
-} from 'typeable';
+import { isArray, isNumber } from 'typeable';
 
-export interface Options {
+export interface ArrayLengthOptions {
   min?: number;
   minOrEqual?: number;
   max?: number;
   maxOrEqual?: number;
 }
 
-export function arrayLength (value: any, options: Options = {}): boolean {
+export function arrayLength (value: any, options: ArrayLengthOptions = {}): boolean {
   if (!isArray(value)) return false;
 
   let size = value.length;
-  let {min, minOrEqual, max, maxOrEqual} = options;
+  let { min, minOrEqual, max, maxOrEqual } = options;
   if (isNumber(min) && !(size > min)) return false;
   if (isNumber(minOrEqual) && !(size >= minOrEqual)) return false;
   if (isNumber(max) && !(size < max)) return false;

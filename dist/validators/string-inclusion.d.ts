@@ -1,4 +1,4 @@
-export interface Options {
+export interface StringInclusionOptions {
     seed?: string;
 }
-export declare function stringInclusion(value: any, options?: Options): boolean;
+export declare function stringInclusion(value: any, options?: StringInclusionOptions): boolean;

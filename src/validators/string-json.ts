@@ -1,4 +1,4 @@
-import {isString} from 'typeable';
+import { isString } from 'typeable';
 
 export function stringJSON (value: any): boolean {
   if (!isString(value)) return false;
@@ -6,7 +6,6 @@ export function stringJSON (value: any): boolean {
   try {
     let obj = JSON.parse(value);
     return !!obj && typeof obj === 'object';
-  }
-  catch (e) {}
+  } catch (e) {}
   return false;
 };

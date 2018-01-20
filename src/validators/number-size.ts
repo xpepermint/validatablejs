@@ -1,13 +1,13 @@
-import {isNumber} from 'typeable';
+import { isNumber } from 'typeable';
 
-export interface Options {
+export interface NumberSizeOptions {
   min?: number;
   minOrEqual?: number;
   max?: number;
   maxOrEqual?: number;
 }
 
-export function numberSize (value: any, options: Options = {}): boolean {
+export function numberSize (value: any, options: NumberSizeOptions = {}): boolean {
   if (!isNumber(value)) return false;
 
   let {min, minOrEqual, max, maxOrEqual} = options;

@@ -1,13 +1,13 @@
-import {isString} from 'typeable';
+import { isString } from 'typeable';
 
-export interface Options {
+export interface StringFQDNOptions {
   requireTld?: boolean;
   allowUnderscores?: boolean;
   allowTrailingDot?: boolean;
 }
 
-export function stringFQDN (value: any, options: Options = {}): boolean {
-  let {requireTld = true, allowUnderscores = false, allowTrailingDot = false} = options;
+export function stringFQDN (value: any, options: StringFQDNOptions = {}): boolean {
+  let { requireTld = true, allowUnderscores = false, allowTrailingDot = false } = options;
 
   if (!isString(value)) return false;
 

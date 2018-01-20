@@ -1,9 +1,9 @@
-import {arrayInclusion} from './array-inclusion';
+import { arrayInclusion } from './array-inclusion';
 
-export interface Options {
+export interface ArrayExclusionOptions {
   values?: any[];
 }
 
-export function arrayExclusion (value: any, options: Options = {}): boolean {
+export function arrayExclusion (value: any, options: ArrayExclusionOptions = {}): boolean {
   return !arrayInclusion(value, options);
 }

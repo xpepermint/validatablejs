@@ -1,4 +1,4 @@
-export interface Options {
+export interface StringDateOptions {
     iso?: boolean;
 }
-export declare function stringDate(value: any, recipe?: Options): boolean;
+export declare function stringDate(value: any, recipe?: StringDateOptions): boolean;

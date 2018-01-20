@@ -1,4 +1,4 @@
-import {isString} from 'typeable';
+import { isString } from 'typeable';
 
 export function stringLowercase (value: any): boolean {
   if (!isString(value)) return false;

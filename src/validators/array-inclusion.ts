@@ -1,11 +1,11 @@
-import {isArray} from 'typeable';
+import { isArray } from 'typeable';
 
-export interface Options {
+export interface ArrayInclusionOptions {
   values?: any[];
 }
 
-export function arrayInclusion (value: any, options: Options = {}): boolean {
-  let {values} = options;
+export function arrayInclusion (value: any, options: ArrayInclusionOptions = {}): boolean {
+  let { values } = options;
 
   if (!isArray(values)) return false;
 
