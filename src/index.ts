@@ -8,7 +8,7 @@ import * as builtInValidators from './validators';
 
 export interface ValidatorRecipe {
   validator: string;
-  message?: string;
+  message?: string | (() => string);
   code?: number;
   condition?: () => boolean | Promise<boolean>;
   [key: string]: any;
