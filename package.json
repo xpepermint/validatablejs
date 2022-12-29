@@ -41,7 +41,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/lodash.merge": "^4.6.3",
-    "ava": "^0.25.0",
+    "ava": "^5.1.0",
     "typescript": "^2.8.1"
   },
   "dependencies": {
